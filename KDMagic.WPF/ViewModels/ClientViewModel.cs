@@ -1,7 +1,6 @@
 ﻿using Caliburn.Micro;
 using KDMagic.Library;
 using Ookii.Dialogs.Wpf;
-using System;
 using System.IO;
 using System.Linq;
 
@@ -52,7 +51,7 @@ namespace KDMagic.WPF.ViewModels
         {
             get
             {
-                return invalidFiles.Length;
+                return InvalidFiles.Length;
             }
         }
 
@@ -67,6 +66,25 @@ namespace KDMagic.WPF.ViewModels
                 directoryPath = value;
                 NotifyOfPropertyChange(() => DirectoryPath);
                 NotifyOfPropertyChange(() => CanScan);
+            }
+        }
+
+
+        /// <summary>
+        /// The currently scanned invalid files
+        /// </summary>
+        private KDMFile[] InvalidFiles
+        {
+            get
+            {
+                return invalidFiles;
+            }
+            set
+            {
+                invalidFiles = value;
+
+                NotifyOfPropertyChange(() => InvalidCount);
+                NotifyOfPropertyChange(() => CanDelete);
             }
         }
 
@@ -101,12 +119,7 @@ namespace KDMagic.WPF.ViewModels
 
             // Select only invalid ones
 
-            invalidFiles = files.Where(f => !f.Valid).ToArray();
-
-            // Update UI
-
-            NotifyOfPropertyChange(() => InvalidCount);
-            NotifyOfPropertyChange(() => CanDelete);
+            InvalidFiles = files.Where(f => !f.Valid).ToArray();
         }
 
         /// <summary>
@@ -114,7 +127,13 @@ namespace KDMagic.WPF.ViewModels
         /// </summary>
         public void Delete()
         {
-            throw new NotImplementedException();
+            // Delete files
+
+            KDMClient.DeleteFiles(invalidFiles);
+
+            // Reset array
+
+            InvalidFiles = new KDMFile[0];
         }
 
         #endregion

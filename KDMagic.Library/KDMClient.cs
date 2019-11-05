@@ -76,7 +76,13 @@ namespace KDMagic.Library
         /// <param name="files">The files that should be deleted</param>
         public static void DeleteFiles(KDMFile[] files)
         {
-            throw new NotImplementedException();
+            // Go through each KDM file
+
+            foreach (KDMFile file in files)
+
+                // Delete the xml file at its path
+
+                File.Delete(file.Path);
         }
 
         #endregion
