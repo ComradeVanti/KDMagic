@@ -3,6 +3,7 @@ using KDMagic.Library;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace KDMagic.WPF.ViewModels
 {
@@ -94,7 +95,18 @@ namespace KDMagic.WPF.ViewModels
         /// </summary>
         public void Scan()
         {
-            throw new NotImplementedException();
+            // Get the files in the directorypath
+
+            KDMFile[] files = KDMClient.GetFiles(DirectoryPath);
+
+            // Select only invalid ones
+
+            invalidFiles = files.Where(f => !f.Valid).ToArray();
+
+            // Update UI
+
+            NotifyOfPropertyChange(() => InvalidCount);
+            NotifyOfPropertyChange(() => CanDelete);
         }
 
         /// <summary>

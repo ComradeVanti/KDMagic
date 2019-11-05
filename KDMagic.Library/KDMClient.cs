@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace KDMagic.Library
 {
@@ -20,17 +23,51 @@ namespace KDMagic.Library
         /// <returns>All KDM files in the given directory</returns>
         public static KDMFile[] GetFiles(string directoryPath)
         {
-            throw new NotImplementedException();
-        }
+            // Create xml document
 
-        /// <summary>
-        /// Gets all invalid KDM files in a given direcory
-        /// </summary>
-        /// <param name="directoryPath">The KDM folder path</param>
-        /// <returns>All invalid KDM files in the given directory</returns>
-        public static KDMFile[] GetInvalidFiles(string directoryPath)
-        {
-            throw new NotImplementedException();
+            XmlDocument doc = new XmlDocument();
+
+            // Create list of KDM files
+
+            List<KDMFile> files = new List<KDMFile>();
+
+            // Go through each file in the directory
+
+            foreach (string filePath in Directory.GetFiles(directoryPath))
+            {
+
+                // Check if file is an xml file
+
+                if (Path.GetExtension(filePath) == ".xml")
+                {
+                    // Load xml from file
+
+                    doc.LoadXml(File.ReadAllText(filePath));
+
+                    // Extract values
+
+                    string movieName = doc.GetElementsByTagName("ContentTitleText")[0].InnerText.Split("_").First();
+                    DateTime validFrom = DateTime.Parse(doc.GetElementsByTagName("ContentKeysNotValidBefore")[0].InnerText);
+                    DateTime validTo = DateTime.Parse(doc.GetElementsByTagName("ContentKeysNotValidAfter")[0].InnerText);
+
+                    // Create KDM file
+
+                    KDMFile file = new KDMFile(
+                        filePath,
+                        movieName,
+                        validFrom,
+                        validTo
+                        );
+
+                    // Add file to list
+
+                    files.Add(file);
+                }
+            }
+
+            // Return list as array
+
+            return files.ToArray();
         }
 
         /// <summary>

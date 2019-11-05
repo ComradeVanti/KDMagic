@@ -38,5 +38,17 @@ namespace KDMagic.Library
 
         #endregion
 
+        #region Constructor
+
+        public KDMFile(string path, string movieName, DateTime validFrom, DateTime validTo)
+        {
+            Path = path;
+            MovieName = movieName;
+            ValidFrom = validFrom;
+            ValidTo = validTo;
+        }
+
+        #endregion
+
     }
 }
