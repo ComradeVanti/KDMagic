@@ -5,6 +5,11 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>KDMagic_Logo.ico</ApplicationIcon>
+    <AssemblyName>KDMagic</AssemblyName>
+    <StartupObject>KDMagic.WPF.App</StartupObject>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace KDMagic.Library
@@ -44,24 +43,30 @@ namespace KDMagic.Library
 
                     doc.LoadXml(File.ReadAllText(filePath));
 
-                    // Extract values
+                    // Check if file is KDM file
 
-                    string movieName = doc.GetElementsByTagName("ContentTitleText")[0].InnerText.Split("_").First();
-                    DateTime validFrom = DateTime.Parse(doc.GetElementsByTagName("ContentKeysNotValidBefore")[0].InnerText);
-                    DateTime validTo = DateTime.Parse(doc.GetElementsByTagName("ContentKeysNotValidAfter")[0].InnerText);
+                    if (doc.GetElementsByTagName("DCinemaSecurityMessage").Count == 1)
+                    {
 
-                    // Create KDM file
+                        // Extract values
 
-                    KDMFile file = new KDMFile(
-                        filePath,
-                        movieName,
-                        validFrom,
-                        validTo
-                        );
+                        string movieName = doc.GetElementsByTagName("ContentTitleText")[0].InnerText.Split("_").First();
+                        DateTime validFrom = DateTime.Parse(doc.GetElementsByTagName("ContentKeysNotValidBefore")[0].InnerText);
+                        DateTime validTo = DateTime.Parse(doc.GetElementsByTagName("ContentKeysNotValidAfter")[0].InnerText);
 
-                    // Add file to list
+                        // Create KDM file
 
-                    files.Add(file);
+                        KDMFile file = new KDMFile(
+                            filePath,
+                            movieName,
+                            validFrom,
+                            validTo
+                            );
+
+                        // Add file to list
+
+                        files.Add(file);
+                    }
                 }
             }
 
