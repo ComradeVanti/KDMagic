@@ -12,4 +12,8 @@
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="1.0.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KDMagic.Library\KDMagic.Library.csproj" />
+  </ItemGroup>
+
 </Project>
