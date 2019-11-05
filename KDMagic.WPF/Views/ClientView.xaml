@@ -7,6 +7,68 @@
         mc:Ignorable="d"
         Title="ClientView" Height="450" Width="800">
     <Grid>
-        
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Form -->
+
+        <Grid Grid.Column="1" Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Directory input -->
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Margin="0 0 20 0" VerticalAlignment="Center">
+                    Select KDM folder
+                </TextBlock>
+                <TextBox x:Name="DirectoryPath" MinWidth="400"/>
+                <Button x:Name="Browse" Margin="20 0 0 0">
+                    Browse
+                </Button>
+            </StackPanel>
+
+            <!-- Scan button -->
+
+            <Button x:Name="Scan" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                    Margin="0 20 0 0">
+                Scan
+            </Button>
+
+            <!-- Output row -->
+
+            <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal"
+                        Margin="0 40 0 0">
+                <TextBlock VerticalAlignment="Center" Margin="0 0 5 0"
+                           Text="{Binding InvalidCount, FallbackValue=0}"/>
+                <TextBlock Margin="0 0 20 0" VerticalAlignment="Center">
+                    invalid KDM files found.
+                </TextBlock>
+                <Button x:Name="Delete">
+                    Delete
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
     </Grid>
 </Window>
