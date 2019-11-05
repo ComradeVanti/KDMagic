@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using KDMagic.Library;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.IO;
 
@@ -77,7 +78,15 @@ namespace KDMagic.WPF.ViewModels
         /// </summary>
         public void Browse()
         {
-            throw new NotImplementedException();
+            // Open a dialog box to select a path
+
+            var dialog = new VistaFolderBrowserDialog();
+            var result = dialog.ShowDialog();
+
+            // If a path was returned store it in the DirectoryPath property
+
+            if (result.HasValue && result.Value)
+                DirectoryPath = dialog.SelectedPath;
         }
 
         /// <summary>
