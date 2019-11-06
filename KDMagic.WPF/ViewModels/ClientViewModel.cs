@@ -166,6 +166,11 @@ namespace KDMagic.WPF.ViewModels
                     file.ValidFrom,
                     file.ValidTo
                     ));
+
+            // Select first item (If there are any in the list)
+
+            if (InvalidFileModels.Count > 0)
+                SelectedFile = InvalidFileModels[0];
         }
 
         /// <summary>
