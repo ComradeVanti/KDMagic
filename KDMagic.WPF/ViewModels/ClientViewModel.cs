@@ -180,6 +180,10 @@ namespace KDMagic.WPF.ViewModels
             // Reset array
 
             InvalidFiles = new KDMFile[0];
+
+            // Clear model list
+
+            InvalidFileModels.Clear();
         }
 
         #endregion
