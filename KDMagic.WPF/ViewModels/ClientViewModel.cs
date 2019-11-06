@@ -1,6 +1,8 @@
 ﻿using Caliburn.Micro;
 using KDMagic.Library;
+using KDMagic.WPF.Models;
 using Ookii.Dialogs.Wpf;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
@@ -17,6 +19,8 @@ namespace KDMagic.WPF.ViewModels
 
         private string directoryPath;
         private KDMFile[] invalidFiles = new KDMFile[0];
+        private BindingList<KDMFileModel> invalidFileModels = new BindingList<KDMFileModel>();
+        private KDMFileModel selectedFile;
 
         #endregion
 
@@ -45,17 +49,6 @@ namespace KDMagic.WPF.ViewModels
         }
 
         /// <summary>
-        /// The number of invalid KDM files
-        /// </summary>
-        public int InvalidCount
-        {
-            get
-            {
-                return InvalidFiles.Length;
-            }
-        }
-
-        /// <summary>
         /// The current selected KDM folder path
         /// </summary>
         public string DirectoryPath
@@ -69,6 +62,48 @@ namespace KDMagic.WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Display string for the number of invalid KDMS
+        /// </summary>
+        public string InvalidCountDisplayString { get { return $"{InvalidCount} invalid KDMs found!"; } }
+
+        /// <summary>
+        /// List of the models representing the currently selected invalid files
+        /// </summary>
+        public BindingList<KDMFileModel> InvalidFileModels
+        {
+            get { return invalidFileModels; }
+            set
+            {
+                invalidFileModels = value;
+                NotifyOfPropertyChange(() => InvalidFileModels);
+            }
+        }
+
+        /// <summary>
+        /// The selected KDM file model
+        /// </summary>
+        public KDMFileModel SelectedFile
+        {
+            get { return selectedFile; }
+            set
+            {
+                selectedFile = value;
+                NotifyOfPropertyChange(() => SelectedFile);
+            }
+        }
+
+
+        /// <summary>
+        /// The number of invalid KDM files
+        /// </summary>
+        private int InvalidCount
+        {
+            get
+            {
+                return InvalidFiles.Length;
+            }
+        }
 
         /// <summary>
         /// The currently scanned invalid files
@@ -83,7 +118,7 @@ namespace KDMagic.WPF.ViewModels
             {
                 invalidFiles = value;
 
-                NotifyOfPropertyChange(() => InvalidCount);
+                NotifyOfPropertyChange(() => InvalidCountDisplayString);
                 NotifyOfPropertyChange(() => CanDelete);
             }
         }
@@ -120,6 +155,17 @@ namespace KDMagic.WPF.ViewModels
             // Select only invalid ones
 
             InvalidFiles = files.Where(f => !f.Valid).ToArray();
+
+            // Populate model list
+
+            InvalidFileModels.Clear();
+
+            foreach (KDMFile file in InvalidFiles)
+                invalidFileModels.Add(new KDMFileModel(
+                    file.MovieName,
+                    file.ValidFrom,
+                    file.ValidTo
+                    ));
         }
 
         /// <summary>

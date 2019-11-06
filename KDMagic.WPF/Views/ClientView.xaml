@@ -17,57 +17,83 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+
+        <!-- Title -->
+
+        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="48"
+                   TextAlignment="Center">
+            KDMagic!
+        </TextBlock>
 
         <!-- Form -->
 
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="1" Grid.Row="3">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Directory input -->
+            <!-- Input column -->
 
-            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
-                <TextBlock Margin="0 0 20 0" VerticalAlignment="Center">
+            <DockPanel Grid.Column="0" Grid.Row="0" LastChildFill="False">
+
+                <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+
+                    <!-- Directory input-->
+
+                    <StackPanel Orientation="Horizontal"
+                        Height="50">
+                        <TextBlock Margin="0 0 20 0" VerticalAlignment="Center">
                     Select KDM folder
-                </TextBlock>
-                <TextBox x:Name="DirectoryPath" MinWidth="400"/>
-                <Button x:Name="Browse" Margin="20 0 0 0">
-                    Browse
+                        </TextBlock>
+                        <TextBox x:Name="DirectoryPath" MinWidth="200"/>
+                        <Button x:Name="Browse" Margin="20 0 0 0">
+                            Browse
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Scan button -->
+
+                    <Button x:Name="Scan" Margin="0 20 0 0">
+                        Scan
+                    </Button>
+
+                </StackPanel>
+
+                <!-- Delete button -->
+
+                <Button x:Name="Delete"  Margin="0 40 0 0" DockPanel.Dock="Bottom">
+                    Delete invalid KDM files
                 </Button>
+
+            </DockPanel>
+
+            <!-- Output column -->
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical"
+                        Margin="40 0 0 0" MinWidth="250">
+                <TextBlock Text="{Binding InvalidCountDisplayString}"/>
+                <ListView x:Name="InvalidFileModels" 
+                          Height="200" Margin="0 20 0 0"
+                          SelectedItem="{Binding SelectedFile}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MovieName}"
+                                   FontFamily="Courier New"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <TextBlock Text="{Binding SelectedFile.TimeSpan}" Margin="0 20 0 0"/>
             </StackPanel>
-
-            <!-- Scan button -->
-
-            <Button x:Name="Scan" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-                    Margin="0 20 0 0">
-                Scan
-            </Button>
-
-            <!-- Output row -->
-
-            <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal"
-                        Margin="0 40 0 0">
-                <TextBlock VerticalAlignment="Center" Margin="0 0 5 0"
-                           Text="{Binding InvalidCount, FallbackValue=0}"/>
-                <TextBlock Margin="0 0 20 0" VerticalAlignment="Center">
-                    invalid KDM files found.
-                </TextBlock>
-                <Button x:Name="Delete">
-                    Delete
-                </Button>
-            </StackPanel>
-
         </Grid>
-
     </Grid>
 </Window>
