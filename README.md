@@ -1,2 +1,2 @@
 # KDMagic
-Cleaning-tool to remove outdated kms
+Cleaning-tool to remove outdated KDMs
