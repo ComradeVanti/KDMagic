@@ -5,6 +5,8 @@ using Ookii.Dialogs.Wpf;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace KDMagic.WPF.ViewModels
 {
@@ -17,6 +19,7 @@ namespace KDMagic.WPF.ViewModels
 
         #region Fields
 
+        private bool inProcess;
         private string directoryPath;
         private KDMFile[] invalidFiles = new KDMFile[0];
         private BindingList<KDMFileModel> invalidFileModels = new BindingList<KDMFileModel>();
@@ -27,13 +30,29 @@ namespace KDMagic.WPF.ViewModels
         #region Properties
 
         /// <summary>
+        /// Indicates if there is currently a asynchronous process running
+        /// </summary>
+        public bool InProcess
+        {
+            get { return inProcess; }
+            set
+            {
+                inProcess = value;
+                NotifyOfPropertyChange(() => InProcess);
+                NotifyOfPropertyChange(() => LoadingBarVisible);
+                NotifyOfPropertyChange(() => CanScan);
+                NotifyOfPropertyChange(() => CanDelete);
+            }
+        }
+
+        /// <summary>
         /// True if the user has selected a valid directory
         /// </summary>
         public bool CanScan
         {
             get
             {
-                return Directory.Exists(DirectoryPath);
+                return !InProcess && Directory.Exists(DirectoryPath);
             }
         }
 
@@ -44,7 +63,7 @@ namespace KDMagic.WPF.ViewModels
         {
             get
             {
-                return InvalidCount > 0;
+                return !InProcess && InvalidCount > 0;
             }
         }
 
@@ -66,6 +85,11 @@ namespace KDMagic.WPF.ViewModels
         /// Display string for the number of invalid KDMS
         /// </summary>
         public string InvalidCountDisplayString { get { return $"{InvalidCount} invalid KDMs found!"; } }
+
+        /// <summary>
+        /// Bound property that controlls the visibility of the loading bar
+        /// </summary>
+        public Visibility LoadingBarVisible { get { return InProcess ? Visibility.Visible : Visibility.Hidden; } }
 
         /// <summary>
         /// List of the models representing the currently selected invalid files
@@ -146,11 +170,15 @@ namespace KDMagic.WPF.ViewModels
         /// <summary>
         /// Scans the folder for KDM files
         /// </summary>
-        public void Scan()
+        public async Task Scan()
         {
+            // Set process flag
+
+            InProcess = true;
+
             // Get the files in the directorypath
 
-            KDMFile[] files = KDMClient.GetFiles(DirectoryPath);
+            KDMFile[] files = await KDMClient.GetFiles(DirectoryPath);
 
             // Select only invalid ones
 
@@ -171,16 +199,24 @@ namespace KDMagic.WPF.ViewModels
 
             if (InvalidFileModels.Count > 0)
                 SelectedFile = InvalidFileModels[0];
+
+            // Reset process flag
+
+            InProcess = false;
         }
 
         /// <summary>
         /// Deletes the selected KDM files
         /// </summary>
-        public void Delete()
+        public async Task Delete()
         {
+            // Set process flag
+
+            InProcess = true;
+
             // Delete files
 
-            KDMClient.DeleteFiles(invalidFiles);
+            await KDMClient.DeleteFiles(invalidFiles);
 
             // Reset array
 
@@ -189,6 +225,10 @@ namespace KDMagic.WPF.ViewModels
             // Clear model list
 
             InvalidFileModels.Clear();
+
+            // Reset process flag
+
+            InProcess = false;
         }
 
         #endregion

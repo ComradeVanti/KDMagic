@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace KDMagic.Library
@@ -20,7 +21,7 @@ namespace KDMagic.Library
         /// </summary>
         /// <param name="directoryPath">The KDM folder path</param>
         /// <returns>All KDM files in the given directory</returns>
-        public static KDMFile[] GetFiles(string directoryPath)
+        public static async Task<KDMFile[]> GetFiles(string directoryPath)
         {
             // Create xml document
 
@@ -41,7 +42,7 @@ namespace KDMagic.Library
                 {
                     // Load xml from file
 
-                    doc.LoadXml(File.ReadAllText(filePath));
+                    await Task.Run(() => doc.LoadXml(File.ReadAllText(filePath)));
 
                     // Check if file is KDM file
 
@@ -79,7 +80,7 @@ namespace KDMagic.Library
         /// Deletes the given KDM files
         /// </summary>
         /// <param name="files">The files that should be deleted</param>
-        public static void DeleteFiles(KDMFile[] files)
+        public static async Task DeleteFiles(KDMFile[] files)
         {
             // Go through each KDM file
 
@@ -87,7 +88,7 @@ namespace KDMagic.Library
 
                 // Delete the xml file at its path
 
-                File.Delete(file.Path);
+                await Task.Run(() => File.Delete(file.Path));
         }
 
         #endregion

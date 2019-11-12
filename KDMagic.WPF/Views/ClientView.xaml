@@ -60,6 +60,10 @@
                         </Button>
                     </StackPanel>
 
+                    <!-- Loading bar -->
+
+                    <ProgressBar Visibility="{Binding LoadingBarVisible}" Margin="0 20 0 0" IsIndeterminate="True"/>
+
                     <!-- Scan button -->
 
                     <Button x:Name="Scan" Margin="0 20 0 0">
