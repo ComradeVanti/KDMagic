@@ -64,13 +64,20 @@
 
                     <ProgressBar Visibility="{Binding LoadingBarVisible}" Margin="0 20 0 0" IsIndeterminate="True"/>
 
+                    <!-- Only select outdated checkbox -->
+
+                    <CheckBox x:Name="OnlySelectOutdated" Margin="0 20 0 0" IsChecked="True">
+                        Exclude KDMs that will be valid in the future
+                    </CheckBox>
+
                     <!-- Scan button -->
 
-                    <Button x:Name="Scan" Margin="0 20 0 0">
+                    <Button x:Name="Scan" Margin="0 10 0 0">
                         Scan
                     </Button>
 
                 </StackPanel>
+
 
                 <!-- Delete button -->
 
@@ -90,8 +97,7 @@
                           SelectedItem="{Binding SelectedFile}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding MovieName}"
-                                   FontFamily="Courier New"/>
+                            <TextBlock Text="{Binding MovieName}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
