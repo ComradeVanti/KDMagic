@@ -20,6 +20,7 @@ namespace KDMagic.WPF.ViewModels
         #region Fields
 
         private bool inProcess;
+        private bool onlySelectOutdated;
         private string directoryPath;
         private KDMFile[] invalidFiles = new KDMFile[0];
         private BindingList<KDMFileModel> invalidFileModels = new BindingList<KDMFileModel>();
@@ -66,6 +67,21 @@ namespace KDMagic.WPF.ViewModels
                 return !InProcess && InvalidCount > 0;
             }
         }
+
+        /// <summary>
+        /// Indicated wether all invalid or only outdated KDMs should be selected
+        /// If false KDMs that are not yet valid will also be selected
+        /// </summary>
+        public bool OnlySelectOutdated
+        {
+            get { return onlySelectOutdated; }
+            set
+            {
+                onlySelectOutdated = value;
+                NotifyOfPropertyChange(() => OnlySelectOutdated);
+            }
+        }
+
 
         /// <summary>
         /// The current selected KDM folder path
