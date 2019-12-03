@@ -198,7 +198,7 @@ namespace KDMagic.WPF.ViewModels
 
             // Select only invalid ones
 
-            InvalidFiles = files.Where(f => !f.Valid).ToArray();
+            InvalidFiles = files.Where(f => !f.IsValid(OnlySelectOutdated)).ToArray();
 
             // Populate model list
 
