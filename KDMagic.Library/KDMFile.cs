@@ -12,11 +12,6 @@ namespace KDMagic.Library
         #region Properties
 
         /// <summary>
-        /// True if the current date falls into the valid time-span
-        /// </summary>
-        public bool Valid { get { return ValidFrom < DateTime.Now && DateTime.Now < ValidTo; } }
-
-        /// <summary>
         /// The path of this file
         /// </summary>
         public string Path { get; private set; }
@@ -46,6 +41,23 @@ namespace KDMagic.Library
             MovieName = movieName;
             ValidFrom = validFrom;
             ValidTo = validTo;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Indicated wether the file is currently valid
+        /// </summary>
+        /// <param name="onlyInvalidateOutdated">Controls wether the file is considered invalid when not yet valid</param>
+        /// <returns>True if the file is valid, false otherwise</returns>
+        public bool IsValid(bool onlyInvalidateOutdated)
+        {
+            if (onlyInvalidateOutdated)
+                return DateTime.Now < ValidTo;
+            else
+                return ValidFrom < DateTime.Now && DateTime.Now < ValidTo;
         }
 
         #endregion
