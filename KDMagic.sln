@@ -7,6 +7,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "KDMagic.Core", "KDMagic.Cor
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "KDMagic.App.Core", "KDMagic.App.Core\KDMagic.App.Core.fsproj", "{86D7ACD2-5451-4783-896E-208886F01A6B}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "KDMagic.App.WPF", "KDMagic.App.WPF\KDMagic.App.WPF.fsproj", "{247EB21B-5E83-47CF-A4B4-D783468B5A7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{86D7ACD2-5451-4783-896E-208886F01A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D7ACD2-5451-4783-896E-208886F01A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D7ACD2-5451-4783-896E-208886F01A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{247EB21B-5E83-47CF-A4B4-D783468B5A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{247EB21B-5E83-47CF-A4B4-D783468B5A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{247EB21B-5E83-47CF-A4B4-D783468B5A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{247EB21B-5E83-47CF-A4B4-D783468B5A7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
