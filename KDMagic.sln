@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "KDMagic.Core", "KDMagic.Core\KDMagic.Core.fsproj", "{7E63EDB2-C0A2-45C2-8398-A7A5FF417B83}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "KDMagic.App.Core", "KDMagic.App.Core\KDMagic.App.Core.fsproj", "{86D7ACD2-5451-4783-896E-208886F01A6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7E63EDB2-C0A2-45C2-8398-A7A5FF417B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E63EDB2-C0A2-45C2-8398-A7A5FF417B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E63EDB2-C0A2-45C2-8398-A7A5FF417B83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86D7ACD2-5451-4783-896E-208886F01A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D7ACD2-5451-4783-896E-208886F01A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D7ACD2-5451-4783-896E-208886F01A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D7ACD2-5451-4783-896E-208886F01A6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
