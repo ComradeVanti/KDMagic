@@ -9,22 +9,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Program.fs" />
+        <Compile Include="Program.fs"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\KDMagic.App.Core\KDMagic.App.Core.fsproj" />
+        <ProjectReference Include="..\KDMagic.App.Core\KDMagic.App.Core.fsproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Desktop" Version="0.9.7" />
-        <PackageReference Include="JaggerJo.Avalonia.FuncUI" Version="0.4.0" />
-        <PackageReference Include="JaggerJo.Avalonia.FuncUI.DSL" Version="0.4.0" />
-        <PackageReference Include="JaggerJo.Avalonia.FuncUI.Elmish" Version="0.4.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.9.7"/>
+        <PackageReference Include="JaggerJo.Avalonia.FuncUI" Version="0.4.0"/>
+        <PackageReference Include="JaggerJo.Avalonia.FuncUI.DSL" Version="0.4.0"/>
+        <PackageReference Include="JaggerJo.Avalonia.FuncUI.Elmish" Version="0.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove=".template.config\**" />
+        <EmbeddedResource Remove=".template.config\**"/>
     </ItemGroup>
 
 </Project>

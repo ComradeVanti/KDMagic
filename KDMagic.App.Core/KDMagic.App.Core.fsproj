@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj" />
+        <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj"/>
     </ItemGroup>
 
 </Project>
