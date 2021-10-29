@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <Compile Include="DomainTypes.fs" />
+      <Compile Include="IngestFile.fs" />
     </ItemGroup>
 
 </Project>
