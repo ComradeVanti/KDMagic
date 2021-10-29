@@ -11,8 +11,8 @@ open IngestFile
 let ``Ingesting a non-existent file returns a file-not-found error`` path =
     path |> (not << File.Exists)
     ==> lazy
-        (let result = tryIngestFromPath "" |> Async.RunSynchronously
-
-         match result with
-         | Error (FileNotFound _) -> true
-         | _ -> false)
+        (tryIngestFromPath ""
+         |> Async.RunSynchronously
+         |> function
+             | Error (FileNotFound _) -> true
+             | _ -> false)
