@@ -10,4 +10,8 @@
         <NeutralLanguage>en</NeutralLanguage>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Include="DomainTypes.fs" />
+    </ItemGroup>
+
 </Project>
