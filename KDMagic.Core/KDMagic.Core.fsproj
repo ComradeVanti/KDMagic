@@ -15,4 +15,8 @@
       <Compile Include="IngestFile.fs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FSharp.Data" Version="4.2.4" />
+    </ItemGroup>
+
 </Project>
