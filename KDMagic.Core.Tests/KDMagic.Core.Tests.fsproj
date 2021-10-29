@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Include="TestFileGen.fs"/>
         <Compile Include="IngestFileTests.fs"/>
     </ItemGroup>
 
