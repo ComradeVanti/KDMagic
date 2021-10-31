@@ -6,4 +6,4 @@ type DigitalCinemaName = { FilmTitle: string }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
 
-type KDM = { ContentTitle: string; ContentType: ContentType }
+type KDM = { ContentTitle: string }
