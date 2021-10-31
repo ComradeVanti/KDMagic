@@ -18,4 +18,4 @@ let genFilePath = Gen.elements testFilePaths
 type TestFilePath = TestFilePath of string
 
 type ArbFilePaths =
-    static member Test = genFilePath |> Gen.map TestFilePath |> Arb.fromGen
+    static member Test = genFilePath |> asArbOf TestFilePath
