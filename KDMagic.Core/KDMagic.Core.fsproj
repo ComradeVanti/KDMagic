@@ -11,6 +11,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="OptionUtil.fs" />
+        <Compile Include="ResultUtil.fs" />
         <Compile Include="DomainTypes.fs" />
         <Compile Include="KDMDoc.fs" />
         <Compile Include="IngestFile.fs" />
