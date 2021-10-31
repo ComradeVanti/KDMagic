@@ -1,4 +1,4 @@
-﻿module KDMagic.Core.Tests.TestFileGen
+﻿module KDMagic.TestFileGen
 
 open System
 open System.IO

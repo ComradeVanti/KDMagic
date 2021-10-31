@@ -1,4 +1,4 @@
-﻿module KDMagic.Core.Tests.FilmTitleGen
+﻿module KDMagic.FilmTitleGen
 
 open FsCheck
 
@@ -39,7 +39,7 @@ let private genWordCombinator: Gen<string -> string -> string> =
     Gen.elements [ (fun s1 s2 -> $"{s1}-{s2}")
                    (fun s1 s2 -> $"{s1}{s2}") ]
 
-let private genFilmTitle =
+let genFilmTitle =
     gen {
         let! count = genWordCount
         let! words = Gen.listOfLength count genWord

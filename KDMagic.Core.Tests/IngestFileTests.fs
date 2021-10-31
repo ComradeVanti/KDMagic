@@ -1,9 +1,9 @@
-﻿namespace KDMagic.Core.Tests
+﻿namespace KDMagic
 
 open System.IO
 open FsCheck.Xunit
 open KDMagic
-open KDMagic.Core.Tests.TestFileGen
+open KDMagic.TestFileGen
 open global.Xunit
 open FsCheck
 open IngestFile
