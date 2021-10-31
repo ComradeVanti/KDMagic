@@ -9,9 +9,6 @@ type IngestError =
     | FileNotKDM
     | InvalidDigitalCinemaName of string
 
-type IngestResult = Result<KDM, IngestError>
-
-
 let private tryParseDigitalCinemaName (contentTitleText: string) =
     let fields = contentTitleText.Split '_'
 
@@ -23,8 +20,11 @@ let private tryParseDigitalCinemaName (contentTitleText: string) =
         return { FilmTitle = filmName }
     }
 
-let tryIngest file =
-    match KDMDoc.tryParse file with
+let tryIngestFromFile kdmFile =
+    Ok { ContentTitle = kdmFile.DigitalCinemaName.FilmTitle }
+
+let tryIngestFromXml xml =
+    match KDMDoc.tryParse xml with
     | Some doc ->
         let contentTitleText =
             doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentTitleText
@@ -35,15 +35,16 @@ let tryIngest file =
                 |> tryParseDigitalCinemaName
                 |> asResult (InvalidDigitalCinemaName contentTitleText)
 
-            return { DigitalCinemaName = digitalCinemaName }
+            let file = { DigitalCinemaName = digitalCinemaName }
+            return! tryIngestFromFile file
         }
     | None -> Error FileNotKDM
 
 let tryIngestFromPath path =
     async {
         if File.Exists path then
-            let! file = File.ReadAllTextAsync path |> Async.AwaitTask
-            return tryIngest file
+            let! xml = File.ReadAllTextAsync path |> Async.AwaitTask
+            return tryIngestFromXml xml
         else
             return Error(FileNotFound path)
     }

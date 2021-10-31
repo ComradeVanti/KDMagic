@@ -37,7 +37,7 @@ module IngestFileTests =
 
     [<Property>]
     let ``Ingesting an invalid kdm file returns a file-not-kdm error`` file =
-        tryIngest file |> isFileNotKDMError
+        tryIngestFromXml file |> isFileNotKDMError
 
     [<Property>]
     let ``Ingesting a valid file returns an ok kdm`` (TestFilePath path) =
