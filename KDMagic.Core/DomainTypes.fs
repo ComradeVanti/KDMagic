@@ -62,7 +62,7 @@ type DigitalCinemaName =
         Dimension: Dimension
         ProjectorAspect: ProjectorAspect
         AudioLanguage: Language.T
-        SubtitleLanguage: Language.T
+        SubtitleLanguage: Language.T option
         Captions: Captions option
         AudioFormat: AudioFormat
         Resolution: Resolution
