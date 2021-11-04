@@ -41,6 +41,11 @@ type AudioFormat =
     | Surround51
     | Surround71
 
+type Resolution =
+    | TwoK
+    | FourK
+    | EightK
+
 type DigitalCinemaName =
     {
         FilmTitle: FilmTitle.T
@@ -51,6 +56,7 @@ type DigitalCinemaName =
         SubtitleLanguage: Language.T
         Captions: Captions option
         AudioFormat: AudioFormat
+        Resolution: Resolution
     }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
