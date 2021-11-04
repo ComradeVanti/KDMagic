@@ -58,7 +58,7 @@ type DigitalCinemaName =
     {
         FilmTitle: FilmTitle.T
         ContentType: ContentType
-        VersionNumber: VersionNumber.T
+        VersionNumber: VersionNumber.T option
         Dimension: Dimension
         ProjectorAspect: ProjectorAspect
         AudioLanguage: Language.T
