@@ -20,11 +20,17 @@ type ContentType =
     | HLT
     | EVT
 
+type ProjectorAspect =
+    | F
+    | S
+    | C
+
 type DigitalCinemaName =
     {
         FilmTitle: FilmTitle.T
         ContentType: ContentType
         VersionNumber: VersionNumber.T
+        ProjectorAspect: ProjectorAspect
     }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
