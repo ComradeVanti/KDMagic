@@ -9,7 +9,7 @@ type ResultBuilder() =
         | Error error -> Error error
 
     member this.Return(x) = Ok x
-    
+
     member this.ReturnFrom(x) = x
 
 let res = ResultBuilder()

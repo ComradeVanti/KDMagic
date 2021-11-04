@@ -20,7 +20,12 @@ type ContentType =
     | HLT
     | EVT
 
-type DigitalCinemaName = { FilmTitle: FilmTitle.T; ContentType: ContentType }
+type DigitalCinemaName =
+    {
+        FilmTitle: FilmTitle.T
+        ContentType: ContentType
+        VersionNumber: VersionNumber.T
+    }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
 

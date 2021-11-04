@@ -11,16 +11,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="OptionUtil.fs" />
-        <Compile Include="ResultUtil.fs" />
-        <Compile Include="FilmTitle.fs" />
-        <Compile Include="DomainTypes.fs" />
-        <Compile Include="KDMDoc.fs" />
-        <Compile Include="IngestFile.fs" />
+        <Compile Include="OptionUtil.fs"/>
+        <Compile Include="ResultUtil.fs"/>
+        <Compile Include="FilmTitle.fs"/>
+        <Compile Include="VersionNumber.fs"/>
+        <Compile Include="DomainTypes.fs"/>
+        <Compile Include="KDMDoc.fs"/>
+        <Compile Include="IngestFile.fs"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FSharp.Data" Version="4.2.4" />
+        <PackageReference Include="FSharp.Data" Version="4.2.4"/>
     </ItemGroup>
 
 </Project>
