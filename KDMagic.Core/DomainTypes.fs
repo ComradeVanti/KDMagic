@@ -33,6 +33,14 @@ type Captions =
     | Open of CaptionDisplayMode
     | Closed of CaptionDisplayMode
 
+type AudioFormat =
+    | MOS
+    | Mono
+    | Stereo
+    | StereoSub
+    | Surround51
+    | Surround71
+
 type DigitalCinemaName =
     {
         FilmTitle: FilmTitle.T
@@ -42,6 +50,7 @@ type DigitalCinemaName =
         AudioLanguage: Language.T
         SubtitleLanguage: Language.T
         Captions: Captions option
+        AudioFormat: AudioFormat
     }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
