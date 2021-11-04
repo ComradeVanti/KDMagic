@@ -27,12 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="TestFiles\*.xml" CopyToOutputDirectory="PreserveNewest" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Compile Include="TestGenUtil.fs" />
-        <Compile Include="TestFileGen.fs" />
         <Compile Include="FilmTitleGen.fs" />
         <Compile Include="DigitalCinemaNameGen.fs" />
     </ItemGroup>
