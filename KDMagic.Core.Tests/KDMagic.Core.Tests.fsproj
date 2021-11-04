@@ -32,8 +32,11 @@
         <Compile Include="Gen\FilmTitleGenTests.fs"/>
         <Compile Include="Gen\VersionNumberGen.fs"/>
         <Compile Include="Gen\VersionNumberGenTests.fs"/>
+        <Compile Include="Gen\LanguageGen.fs"/>
+        <Compile Include="Gen\LanguageGenTests.fs"/>
         <Compile Include="FilmTitleTests.fs"/>
         <Compile Include="VersionNumberTests.fs"/>
+        <Compile Include="LanguageTests.fs"/>
     </ItemGroup>
 
 </Project>

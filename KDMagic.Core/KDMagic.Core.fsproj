@@ -15,6 +15,7 @@
         <Compile Include="ResultUtil.fs"/>
         <Compile Include="FilmTitle.fs"/>
         <Compile Include="VersionNumber.fs"/>
+        <Compile Include="Language.fs"/>
         <Compile Include="DomainTypes.fs"/>
         <Compile Include="KDMDoc.fs"/>
         <Compile Include="IngestFile.fs"/>

@@ -31,6 +31,8 @@ type DigitalCinemaName =
         ContentType: ContentType
         VersionNumber: VersionNumber.T
         ProjectorAspect: ProjectorAspect
+        AudioLanguage: Language.T
+        SubtitleLanguage: Language.T
     }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
