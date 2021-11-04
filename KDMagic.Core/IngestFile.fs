@@ -17,7 +17,7 @@ let private tryParseDigitalCinemaName (contentTitleText: string) =
     opt {
         let! filmName = tryGetField 0
 
-        return { FilmTitle = FilmTitle.make filmName }
+        return failwith "not implemented"
     }
 
 let tryIngestFromFile kdmFile =
