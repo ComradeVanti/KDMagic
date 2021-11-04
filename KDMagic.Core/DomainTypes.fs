@@ -46,6 +46,10 @@ type Resolution =
     | FourK
     | EightK
 
+type PackageType =
+    | OV
+    | VF
+
 type DigitalCinemaName =
     {
         FilmTitle: FilmTitle.T
@@ -57,6 +61,7 @@ type DigitalCinemaName =
         Captions: Captions option
         AudioFormat: AudioFormat
         Resolution: Resolution
+        PackageType: PackageType
     }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
