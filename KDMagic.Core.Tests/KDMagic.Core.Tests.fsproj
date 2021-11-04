@@ -35,7 +35,6 @@
         <Compile Include="TestFileGen.fs" />
         <Compile Include="FilmTitleGen.fs" />
         <Compile Include="DigitalCinemaNameGen.fs" />
-        <Compile Include="IngestFileTests.fs" />
     </ItemGroup>
 
 </Project>
