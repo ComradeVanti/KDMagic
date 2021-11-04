@@ -20,6 +20,10 @@ type ContentType =
     | HLT
     | EVT
 
+type Dimension =
+    | TwoD
+    | ThreeD
+
 type ProjectorAspect =
     | F
     | S
@@ -55,6 +59,7 @@ type DigitalCinemaName =
         FilmTitle: FilmTitle.T
         ContentType: ContentType
         VersionNumber: VersionNumber.T
+        Dimension: Dimension
         ProjectorAspect: ProjectorAspect
         AudioLanguage: Language.T
         SubtitleLanguage: Language.T
