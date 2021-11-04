@@ -25,6 +25,14 @@ type ProjectorAspect =
     | S
     | C
 
+type CaptionDisplayMode =
+    | Burned
+    | Rendered
+
+type Captions =
+    | Open of CaptionDisplayMode
+    | Closed of CaptionDisplayMode
+
 type DigitalCinemaName =
     {
         FilmTitle: FilmTitle.T
@@ -33,6 +41,7 @@ type DigitalCinemaName =
         ProjectorAspect: ProjectorAspect
         AudioLanguage: Language.T
         SubtitleLanguage: Language.T
+        Captions: Captions option
     }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
