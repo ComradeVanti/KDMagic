@@ -28,8 +28,9 @@
 
     <ItemGroup>
         <Compile Include="TestGenUtil.fs" />
-        <Compile Include="FilmTitleGen.fs" />
-        <Compile Include="DigitalCinemaNameGen.fs" />
+        <Compile Include="Gen\FilmTitleGen.fs" />
+        <Compile Include="Gen\FilmTitleGenTests.fs" />
+        <Compile Include="FilmTitleTests.fs" />
     </ItemGroup>
 
 </Project>

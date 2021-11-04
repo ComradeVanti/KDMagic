@@ -2,7 +2,7 @@
 module KDMagic.DomainTypes
 
 
-type DigitalCinemaName = { FilmTitle: string }
+type DigitalCinemaName = { FilmTitle: FilmTitle.T }
 
 type KDMFile = { DigitalCinemaName: DigitalCinemaName }
 

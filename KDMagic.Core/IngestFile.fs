@@ -17,11 +17,14 @@ let private tryParseDigitalCinemaName (contentTitleText: string) =
     opt {
         let! filmName = tryGetField 0
 
-        return { FilmTitle = filmName }
+        return { FilmTitle = FilmTitle.make filmName }
     }
 
 let tryIngestFromFile kdmFile =
-    Ok { ContentTitle = kdmFile.DigitalCinemaName.FilmTitle }
+    Ok
+        {
+            ContentTitle = FilmTitle.value kdmFile.DigitalCinemaName.FilmTitle
+        }
 
 let tryIngestFromXml xml =
     match KDMDoc.tryParse xml with
