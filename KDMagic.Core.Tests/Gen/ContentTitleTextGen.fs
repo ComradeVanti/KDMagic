@@ -66,5 +66,5 @@ let genContentTitleText =
 
 type ValidContentTitleText = ValidContentTitleText of string
 
-type ArbValidContentTitleTexts =
+type ArbContentTitleTexts =
     static member Valid = genContentTitleText |> asArbOf ValidContentTitleText

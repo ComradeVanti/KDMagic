@@ -1,22 +1,12 @@
 ﻿namespace KDMagic
 
+open FsCheck
 open FsCheck.Xunit
 open KDMagic.ContentTitleTextGen
+open KDMagic.ContentTitleText
 
-[<Properties(Arbitrary = [| typeof<ArbValidContentTitleTexts> |])>]
+[<Properties(Arbitrary = [| typeof<ArbContentTitleTexts> |])>]
 module ContentTitleTextGenTests =
-
-    let private fields (text: string) = text.Split("_") |> Array.toList
-
-    let private subfields (field: string) = field.Split("-") |> Array.toList
-
-    let private getField index text = text |> fields |> List.item index
-
-    let private getSubfield (fieldIndex, subfieldIndex) text =
-        text
-        |> getField fieldIndex
-        |> subfields
-        |> List.item subfieldIndex
 
     [<Property>]
     let ``Texts are made of 12 fields`` (ValidContentTitleText text) =
@@ -40,3 +30,20 @@ module ContentTitleTextGenTests =
         =
         let subFieldCount = text |> getField 1 |> subfields |> List.length
         subFieldCount >= 2 && subFieldCount <= 4
+
+    [<Property>]
+    let ``Fields are seperated by underscores`` (ValidContentTitleText text) =
+        let fieldCount = text |> fieldCount
+        let underscoreCount = text |> countItem '_'
+        fieldCount = underscoreCount + 1
+
+    [<Property>]
+    let ``Sub-fields are seperated by hyphens`` (ValidContentTitleText text) =
+
+        let hasCorrectSubfieldCount field =
+            let subfieldCount = field |> subfieldCount
+            let hyphenCount = field |> countItem '-'
+            subfieldCount = hyphenCount + 1
+
+        let fields = text |> fields |> Gen.elements |> Arb.fromGen
+        Prop.forAll fields hasCorrectSubfieldCount
