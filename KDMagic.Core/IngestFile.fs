@@ -28,7 +28,7 @@ let tryIngestFromFile kdmFile =
 
 let tryIngestFromXml xml =
     match KDMDoc.tryParse xml with
-    | Some doc ->
+    | Ok doc ->
         let contentTitleText =
             doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentTitleText
 
@@ -41,7 +41,7 @@ let tryIngestFromXml xml =
             let file = { DigitalCinemaName = digitalCinemaName }
             return! tryIngestFromFile file
         }
-    | None -> Error FileNotKDM
+    | Error _ -> Error FileNotKDM
 
 let tryIngestFromPath path =
     async {

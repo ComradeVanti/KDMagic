@@ -22,6 +22,6 @@ type DCinemaSecurityMessage =
 
 let tryParse text =
     try
-        Some(DCinemaSecurityMessage.Parse text)
+        Ok(DCinemaSecurityMessage.Parse text)
     with
-    | _ -> None
+    | e -> Error e
