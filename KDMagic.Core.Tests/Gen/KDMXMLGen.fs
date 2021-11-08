@@ -1,7 +1,10 @@
 ﻿module KDMagic.KDMXMLGen
 
+open System
 open FsCheck
 open ContentTitleTextGen
+
+let private baseDate = DateTime(2000, 1, 1)
 
 let private template =
     """<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -12,15 +15,30 @@ let private template =
             <RequiredExtensions>
                 <KDMRequiredExtensions xmlns="http://www.smpte-ra.org/schemas/430-1/2006/KDM">
                     <ContentTitleText>[CTT]</ContentTitleText>
+                    <ContentKeysNotValidBefore>[Start]</ContentKeysNotValidBefore>
+                    <ContentKeysNotValidAfter>[End]</ContentKeysNotValidAfter>
                 </KDMRequiredExtensions>
             </RequiredExtensions>
         </AuthenticatedPublic>
     </DCinemaSecurityMessage>"""
 
+let private genDateAfter (start: DateTime) =
+    Gen.choose (1, 3600) |> Gen.map (float >> start.AddDays)
+
+let private formatDate (date: DateTime) =
+    date.ToString "yyyy-MM-ddThh:mm:ss+00:00"
+
 let genKDMXML =
     gen {
         let! contentTitleText = genContentTitleText
-        return template.Replace("[CTT]", contentTitleText)
+        let! startDate = genDateAfter baseDate
+        let! endDate = genDateAfter startDate
+
+        return
+            template
+                .Replace("[CTT]", contentTitleText)
+                .Replace("[Start]", startDate |> formatDate)
+                .Replace("[End]", endDate |> formatDate)
     }
 
 type ValidKDMXML = ValidKDMXML of string

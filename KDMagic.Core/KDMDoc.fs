@@ -13,6 +13,8 @@ type DCinemaSecurityMessage =
             <RequiredExtensions>
                 <KDMRequiredExtensions xmlns="http://www.smpte-ra.org/schemas/430-1/2006/KDM">
                     <ContentTitleText>Title</ContentTitleText>
+                    <ContentKeysNotValidBefore>Start</ContentKeysNotValidBefore>
+                    <ContentKeysNotValidAfter>End</ContentKeysNotValidAfter>
                 </KDMRequiredExtensions>
             </RequiredExtensions>
         </AuthenticatedPublic>
