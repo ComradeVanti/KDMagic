@@ -8,10 +8,17 @@ let subfields (field: string) = field.Split("-") |> Array.toList
 
 let subfieldCount field = field |> subfields |> List.length
 
-let getField index text = text |> fields |> List.item index
+let tryGetField index text = text |> fields |> List.tryItem index
 
-let getSubfield (fieldIndex, subfieldIndex) text =
+let getField index text = text |> tryGetField index |> Option.get
+
+let tryGetSubfield (fieldIndex, subfieldIndex) text =
     text
     |> getField fieldIndex
     |> subfields
-    |> List.item subfieldIndex
+    |> List.tryItem subfieldIndex
+
+let getSubfield (fieldIndex, subfieldIndex) text =
+    text
+    |> tryGetSubfield (fieldIndex, subfieldIndex)
+    |> Option.get

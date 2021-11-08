@@ -42,6 +42,7 @@
         <Compile Include="FilmTitleTests.fs"/>
         <Compile Include="VersionNumberTests.fs"/>
         <Compile Include="LanguageTests.fs"/>
+        <Compile Include="DigitalCinemaNameTests.fs"/>
     </ItemGroup>
 
 </Project>

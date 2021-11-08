@@ -14,11 +14,13 @@
         <Compile Include="OptionUtil.fs"/>
         <Compile Include="ResultUtil.fs"/>
         <Compile Include="CollectionUtil.fs"/>
+        <Compile Include="UnionUtil.fs"/>
         <Compile Include="FilmTitle.fs"/>
         <Compile Include="VersionNumber.fs"/>
         <Compile Include="Language.fs"/>
         <Compile Include="DomainTypes.fs"/>
         <Compile Include="ContentTitleText.fs"/>
+        <Compile Include="DigitalCinemaName.fs"/>
         <Compile Include="KDMDoc.fs"/>
         <Compile Include="IngestFile.fs"/>
     </ItemGroup>

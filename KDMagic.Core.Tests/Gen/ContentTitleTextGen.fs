@@ -20,6 +20,14 @@ let private formatSubtitle subtitle =
     | Some language -> language |> Language.value |> string
     | None -> "XX"
 
+let private formatCaptions captions =
+    match captions with
+    | Some (Open Rendered) -> "-OCAP"
+    | Some (Open Burned) -> "-ocap"
+    | Some (Closed Rendered) -> "-CCAP"
+    | Some (Closed Burned) -> "-ccap"
+    | _ -> ""
+
 let private formatAudioFormat format =
     match format with
     | MOS -> "MOS"
@@ -35,12 +43,13 @@ let private formatResolution resolution =
     | FourK -> "4K"
     | EightK -> "8K"
 
-let private toContentTitleText dcn =
+let toContentTitleText dcn =
     let contentType = dcn.ContentType |> formatContentType
     let version = dcn.VersionNumber |> formatVersionNumber
     let dimension = dcn.Dimension |> formatDimension
     let audio = dcn.AudioLanguage |> Language.value
     let subtitle = dcn.SubtitleLanguage |> formatSubtitle
+    let captions = dcn.Captions |> formatCaptions
     let audioFormat = dcn.AudioFormat |> formatAudioFormat
     let resolution = dcn.Resolution |> formatResolution
 
@@ -48,7 +57,7 @@ let private toContentTitleText dcn =
         dcn.FilmTitle |> FilmTitle.value
         $"{contentType}{version}-{dimension}"
         $"{dcn.ProjectorAspect}"
-        $"{audio}-{subtitle}"
+        $"{audio}-{subtitle}{captions}"
         "US-GB"
         $"{audioFormat}"
         $"{resolution}"

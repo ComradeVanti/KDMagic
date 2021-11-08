@@ -10,6 +10,8 @@ type OptionBuilder() =
 
     member this.Return(x) = Some x
 
+    member this.ReturnFrom(x) = x
+
 let opt = OptionBuilder()
 
 let asResult error opt =
