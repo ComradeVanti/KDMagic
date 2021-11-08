@@ -1,6 +1,8 @@
 ﻿[<AutoOpen>]
 module KDMagic.DomainTypes
 
+open System
+
 type ContentType =
     | FTR
     | TLR
@@ -69,6 +71,9 @@ type DigitalCinemaName =
         PackageType: PackageType
     }
 
-type KDMFile = { DigitalCinemaName: DigitalCinemaName }
-
-type KDM = { ContentTitle: string }
+type KDM =
+    {
+        ContentInfo: DigitalCinemaName
+        ValidFrom: DateTime
+        ValidUntil: DateTime
+    }
