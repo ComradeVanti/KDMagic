@@ -34,7 +34,8 @@ module DigitalCinemaNameTests =
             .&. compare (fun it -> it.AudioFormat) "Audio-format"
             .&. compare (fun it -> it.Resolution) "Resolution"
             .&. compare (fun it -> it.PackageType) "Package-type"
-            .&. (parsed = original) |@ "An unknown property did not match"
+            .&. (parsed = original)
+            |@ "An unknown property did not match"
 
         match ctt |> DigitalCinemaName.tryParse with
         | Some parsed -> parsed |> matchesOriginal
