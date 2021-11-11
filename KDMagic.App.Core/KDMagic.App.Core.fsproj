@@ -11,15 +11,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj" />
+        <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="Shell.fs" />
+        <Compile Include="Home.fs"/>
+        <Compile Include="Shell.fs"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Elmish" Version="3.1.0" />
+        <PackageReference Include="Elmish" Version="3.1.0"/>
     </ItemGroup>
 
 </Project>

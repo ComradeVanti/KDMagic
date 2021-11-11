@@ -3,12 +3,19 @@ module KDMagic.App.Shell
 
 open Elmish
 
-type State = unit
+[<RequireQualifiedAccess>]
+type State = Home of Home.State
 
 [<RequireQualifiedAccess>]
-type Msg = unit
+type Msg = Home of Home.Msg
 
 
-let initial = (), Cmd.none
+let private wrapHome (state, cmd) =
+    (State.Home state), (cmd |> Cmd.map Msg.Home)
 
-let update msg state = state, Cmd.none
+let initial = Home.initial |> wrapHome
+
+let update msg state =
+    match msg, state with
+    | Msg.Home homeMsg, State.Home homeState ->
+        homeState |> Home.update homeMsg |> wrapHome
