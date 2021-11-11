@@ -19,6 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\KDMagic.App.Core\KDMagic.App.Core.fsproj"/>
+        <ProjectReference Include="..\KDMagic.TestUtil\KDMagic.TestUtil.fsproj"/>
     </ItemGroup>
 
     <ItemGroup>

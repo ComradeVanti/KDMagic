@@ -1,6 +1,6 @@
 ﻿module KDMagic.App.HomeTests
 
-open FsCheck
+open KDMagic
 open FsCheck.Xunit
 
 [<Property>]
@@ -10,5 +10,4 @@ let ``Directory-path changes on DirectoryPathChanged event`` state newPath =
         |> Home.update (newPath |> Home.Msg.DirectoryPathChanged)
         |> fst
 
-    updated.DirectoryPath = newPath
-    |@ $"Expected \"{newPath}\" but got \"{updated.DirectoryPath}\"."
+    updated.DirectoryPath =? newPath

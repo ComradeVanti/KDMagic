@@ -24,10 +24,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj"/>
+        <ProjectReference Include="..\KDMagic.TestUtil\KDMagic.TestUtil.fsproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="TestGenUtil.fs"/>
         <Compile Include="Gen\FilmTitleGen.fs"/>
         <Compile Include="Gen\FilmTitleGenTests.fs"/>
         <Compile Include="Gen\VersionNumberGen.fs"/>
