@@ -15,12 +15,16 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Include="AppData.fs"/>
+        <Compile Include="Json.fs"/>
+        <Compile Include="Settings.fs"/>
         <Compile Include="Home.fs"/>
         <Compile Include="Shell.fs"/>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Elmish" Version="3.1.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
     </ItemGroup>
 
 </Project>
