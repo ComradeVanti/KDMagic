@@ -9,6 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="Home.fs"/>
+        <Compile Include="Shell.fs"/>
         <Compile Include="Program.fs"/>
     </ItemGroup>
 

@@ -16,10 +16,10 @@ type MainWindow() as this =
         base.Width <- 600.0
         base.Height <- 400.0
 
-            (fun _ _ -> DockPanel.create [])
         Elmish.Program.mkProgram
             (fun _ -> Shell.initial)
             Shell.update
+            Shell.view
         |> Program.withHost this
         |> Program.run
 
