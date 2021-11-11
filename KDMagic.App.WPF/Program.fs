@@ -1,12 +1,12 @@
 ﻿namespace KDMagic.App.WPF
 
-open Avalonia.FuncUI.DSL
 open Elmish
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.Components.Hosts
+open KDMagic.App
 
 type MainWindow() as this =
     inherit HostWindow()
@@ -16,10 +16,10 @@ type MainWindow() as this =
         base.Width <- 600.0
         base.Height <- 400.0
 
-        Elmish.Program.mkSimple
-            (fun () -> ())
-            (fun _ _ -> ())
             (fun _ _ -> DockPanel.create [])
+        Elmish.Program.mkProgram
+            (fun _ -> Shell.initial)
+            Shell.update
         |> Program.withHost this
         |> Program.run
 
