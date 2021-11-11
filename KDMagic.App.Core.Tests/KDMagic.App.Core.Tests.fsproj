@@ -21,4 +21,8 @@
         <ProjectReference Include="..\KDMagic.App.Core\KDMagic.App.Core.fsproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Include="HomeTests.fs"/>
+    </ItemGroup>
+
 </Project>

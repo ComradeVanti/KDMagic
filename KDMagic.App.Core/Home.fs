@@ -3,12 +3,19 @@ module KDMagic.App.Home
 
 open Elmish
 
-type State = unit
+type State = { DirectoryPath: string }
 
 [<RequireQualifiedAccess>]
-type Msg = unit
+type Msg = DirectoryPathChanged of string
 
 
-let initial = (), Cmd.none
+let private changeDirectoryPath newPath state =
+    { state with DirectoryPath = newPath }
 
-let update msg state = state, Cmd.none
+
+let initial = { DirectoryPath = "" }, Cmd.none
+
+let update msg state =
+    match msg with
+    | Msg.DirectoryPathChanged newPath ->
+        state |> changeDirectoryPath newPath, Cmd.none
