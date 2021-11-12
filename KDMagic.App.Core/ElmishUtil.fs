@@ -11,3 +11,9 @@ let addEmit emit (mapper: _ -> Cmd<_>) (cmd: Cmd<_>) =
         | None -> Cmd.none
     ]
     |> Cmd.batch
+
+let wrapChild wrapState wrapCmd wrapEmit (state, cmd, emit) =
+
+    let wrappedCmd = cmd |> Cmd.map wrapCmd |> addEmit emit wrapEmit
+
+    (wrapState state), wrappedCmd
