@@ -12,18 +12,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FsCheck.Xunit" Version="2.16.3"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4"/>
-        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="FsCheck.Xunit" Version="2.16.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+        <PackageReference Include="xunit" Version="2.4.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\KDMagic.App.Core\KDMagic.App.Core.fsproj"/>
-        <ProjectReference Include="..\KDMagic.TestUtil\KDMagic.TestUtil.fsproj"/>
+        <ProjectReference Include="..\KDMagic.App.Core\KDMagic.App.Core.fsproj" />
+        <ProjectReference Include="..\KDMagic.TestUtil\KDMagic.TestUtil.fsproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="HomeTests.fs"/>
+        <Compile Include="HomePageTests.fs" />
     </ItemGroup>
 
 </Project>

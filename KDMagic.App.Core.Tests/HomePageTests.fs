@@ -1,0 +1,3 @@
+﻿module KDMagic.App.HomePageTests
+
+

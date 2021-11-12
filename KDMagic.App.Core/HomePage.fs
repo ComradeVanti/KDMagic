@@ -1,5 +1,5 @@
 ﻿[<RequireQualifiedAccess>]
-module KDMagic.App.Home
+module KDMagic.App.HomePage
 
 open Elmish
 
