@@ -11,6 +11,7 @@ type State =
 [<RequireQualifiedAccess>]
 type Msg =
     | OpenSettings
+    | CloseSettings
     | Home of HomePage.Msg
     | Settings of SettingsPage.Msg
 
@@ -27,7 +28,7 @@ let private wrapSettings settingsOutput =
 
     let wrapEmit =
         function
-        | _ -> Cmd.none
+        | SettingsPage.Emit.CloseSettings -> Cmd.ofMsg Msg.CloseSettings
 
     settingsOutput
     |> wrapChild State.Settings Msg.Settings wrapEmit

@@ -13,7 +13,7 @@ let private loadingScreen =
 let private viewError error =
     let errorMsg =
         match error with
-        | SettingsError.CouldNotParse -> "Could not parse settings"
+        | SettingsLoadError.CouldNotParse -> "Could not parse settings"
 
     TextBlock.create [ TextBlock.text errorMsg ] |> asView
 
@@ -24,6 +24,8 @@ let private viewSettings settings dispatch =
         |> SettingsPage.Msg.SettingsChanged
         |> dispatch
 
+    let onSaveButtonPressed _ = SettingsPage.Msg.Save |> dispatch
+
     let folderPathEditor =
         StackPanel.create [ StackPanel.orientation Orientation.Vertical
                             StackPanel.children [ TextBlock.create [ TextBlock.text
@@ -33,8 +35,12 @@ let private viewSettings settings dispatch =
                                                                    TextBox.onTextChanged
                                                                        onKDMFolderPathChanged ] ] ]
 
+    let saveButton =
+        Button.create [ Button.content "Save"
+                        Button.onClick onSaveButtonPressed ]
+
     StackPanel.create [ StackPanel.orientation Orientation.Vertical
-                        StackPanel.children [ folderPathEditor ] ]
+                        StackPanel.children [ folderPathEditor; saveButton ] ]
     |> asView
 
 let view (state: SettingsPage.State) dispatch =

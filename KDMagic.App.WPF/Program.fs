@@ -7,6 +7,7 @@ open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.Components.Hosts
 open KDMagic.App
+open KDMagic.App.WPF
 
 type MainWindow() as this =
     inherit HostWindow()
@@ -21,6 +22,7 @@ type MainWindow() as this =
             Shell.update
             Shell.view
         |> Program.withHost this
+        |> Program.withConsoleTrace
         |> Program.run
 
 

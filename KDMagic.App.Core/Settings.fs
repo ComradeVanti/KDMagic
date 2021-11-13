@@ -5,7 +5,7 @@ open KDMagic.App.AppData
 type Settings = { KDMFolderPath: string }
 
 [<RequireQualifiedAccess>]
-type SettingsError = | CouldNotParse
+type SettingsLoadError = | CouldNotParse
 
 let private settingsFileName = "settings.json"
 
@@ -20,8 +20,12 @@ let tryLoad () =
             | Ok content ->
                 match content |> Json.tryParse<Settings> with
                 | Some settings -> Ok settings
-                | None -> Error SettingsError.CouldNotParse
+                | None -> Error SettingsLoadError.CouldNotParse
             | Error error ->
                 match error with
                 | AppDataError.FileNotFound _ -> Ok defaultSettings
     }
+
+let save (settings: Settings) =
+    let json = Json.stringify settings
+    writeAppFile settingsFileName json

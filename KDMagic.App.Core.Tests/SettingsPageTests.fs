@@ -1,6 +1,5 @@
 ﻿module KDMagic.App.SettingsPageTests
 
-open FsCheck
 open FsCheck.Xunit
 open KDMagic.App
 
@@ -13,16 +12,9 @@ let ``Loading settings brings the page into the loaded state`` settings =
     | _ -> false
 
 [<Property>]
-let ``Loading settings when they are already loaded, does nothing``
-    oldSettings
-    settings
-    =
-    oldSettings <> settings
-    ==> lazy
-        (let state = SettingsPage.State.Loaded oldSettings
-         let msg = SettingsPage.Msg.SettingsLoaded settings
+let ``Load-errors bring the page into the error state`` error =
+    let msg = SettingsPage.Msg.LoadError error
 
-         match state |> SettingsPage.update msg with
-         | SettingsPage.State.Loaded newSettings, _, _ ->
-             newSettings = oldSettings
-         | _ -> false)
+    match SettingsPage.State.Unloaded |> SettingsPage.update msg with
+    | SettingsPage.State.LoadError _, _, _ -> true
+    | _ -> false
