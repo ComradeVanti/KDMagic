@@ -16,3 +16,6 @@ let tryParse<'a> text =
     let parsed = JsonConvert.DeserializeObject<'a>(text, settings)
 
     if hadError then Some parsed else None
+
+let stringify item =
+    JsonConvert.SerializeObject item
