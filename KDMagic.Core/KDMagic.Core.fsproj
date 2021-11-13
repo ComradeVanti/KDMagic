@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="ErrorUtil.fs"/>
         <Compile Include="OptionUtil.fs"/>
         <Compile Include="ResultUtil.fs"/>
         <Compile Include="CollectionUtil.fs"/>
