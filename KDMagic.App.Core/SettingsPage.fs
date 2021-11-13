@@ -16,6 +16,7 @@ type Msg =
     | SettingsChanged of Settings
     | Save
     | SettingsSaved
+    | Exit
 
 [<RequireQualifiedAccess>]
 type Emit = | CloseSettings
@@ -30,6 +31,8 @@ let initial () = Unloaded, loadCommand, None
 
 let update msg state =
 
+    let closePage = state, Cmd.none, Some Emit.CloseSettings
+    
     let noChanges = state, Cmd.none, None
 
     match state, msg with
@@ -37,7 +40,8 @@ let update msg state =
     | Unloaded, Msg.LoadError error -> LoadError error, Cmd.none, None
     | Loaded _, Msg.SettingsChanged settings -> Loaded settings, Cmd.none, None
     | Loaded settings, Msg.Save -> state, makeSaveCommand settings, None
-    | Loaded _, Msg.SettingsSaved -> state, Cmd.none, Some Emit.CloseSettings
+    | Loaded _, Msg.SettingsSaved -> closePage
+    | _, Msg.Exit -> closePage
     | _, Msg.SettingsLoaded _ -> noChanges
     | _, Msg.LoadError _ -> noChanges
     | _, Msg.SettingsChanged _ -> noChanges

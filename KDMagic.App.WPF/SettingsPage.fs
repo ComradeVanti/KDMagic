@@ -8,14 +8,18 @@ open Avalonia.FuncUI.DSL
 open KDMagic.App.Settings
 
 let private loadingScreen =
-    TextBlock.create [ TextBlock.text "Loading" ] |> asView
+    TextBlock.create [ TextBlock.dock Dock.Top
+                       TextBlock.text "Loading" ]
+    |> asView
 
 let private viewError error =
     let errorMsg =
         match error with
         | SettingsLoadError.CouldNotParse -> "Could not parse settings"
 
-    TextBlock.create [ TextBlock.text errorMsg ] |> asView
+    TextBlock.create [ TextBlock.dock Dock.Top
+                       TextBlock.text errorMsg ]
+    |> asView
 
 let private viewSettings settings dispatch =
 
@@ -40,11 +44,24 @@ let private viewSettings settings dispatch =
                         Button.onClick onSaveButtonPressed ]
 
     StackPanel.create [ StackPanel.orientation Orientation.Vertical
+                        StackPanel.dock Dock.Top
                         StackPanel.children [ folderPathEditor; saveButton ] ]
     |> asView
 
 let view (state: SettingsPage.State) dispatch =
-    match state with
-    | SettingsPage.State.Unloaded -> loadingScreen
-    | SettingsPage.State.Loaded settings -> viewSettings settings dispatch
-    | SettingsPage.State.LoadError error -> viewError error
+
+    let onExitButtonClicked _ = SettingsPage.Msg.Exit |> dispatch
+
+    let pageContent =
+        match state with
+        | SettingsPage.State.Unloaded -> loadingScreen
+        | SettingsPage.State.Loaded settings -> viewSettings settings dispatch
+        | SettingsPage.State.LoadError error -> viewError error
+
+    let exitButton =
+        Button.create [ Button.content "Exit"
+                        Button.onClick onExitButtonClicked
+                        Button.dock Dock.Bottom ]
+
+    DockPanel.create [ DockPanel.children [ pageContent; exitButton ] ]
+    |> asView
