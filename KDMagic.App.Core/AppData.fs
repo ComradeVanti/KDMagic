@@ -16,9 +16,12 @@ let private appFolderExists () = Directory.Exists kDMagicDataPath
 let private createAppFolder () =
     Directory.CreateDirectory kDMagicDataPath |> ignore
 
+let private requireAppFolder () =
+    if not <| (appFolderExists ()) then createAppFolder ()
+
 let tryReadAppFile subPath =
     async {
-        if not <| (appFolderExists ()) then createAppFolder ()
+        requireAppFolder ()
         let filePath = Path.Combine(kDMagicDataPath, subPath)
 
         if File.Exists filePath then
@@ -27,3 +30,9 @@ let tryReadAppFile subPath =
         else
             return Error(AppDataError.FileNotFound filePath)
     }
+
+let writeAppFile subPath content =
+    requireAppFolder ()
+    let filePath = Path.Combine(kDMagicDataPath, subPath)
+
+    File.WriteAllTextAsync(filePath, content) |> Async.AwaitTask
