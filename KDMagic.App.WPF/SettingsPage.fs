@@ -13,7 +13,6 @@ let view (state: SettingsPage.State) dispatch =
     let viewError error =
         let errorMsg =
             match error with
-            | SettingsError.NotFound -> "No settings found"
             | SettingsError.CouldNotParse -> "Could not parse settings"
 
         TextBlock.create [ TextBlock.text errorMsg ]
