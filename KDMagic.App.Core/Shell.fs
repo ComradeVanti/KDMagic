@@ -36,6 +36,8 @@ let private wrapSettings settingsOutput =
 
 let openSettings () = SettingsPage.initial () |> wrapSettings
 
+let closeSettings () = HomePage.initial |> wrapHome
+
 
 let initial = HomePage.initial |> wrapHome
 
@@ -48,6 +50,8 @@ let update msg state =
         |> SettingsPage.update settingsMsg
         |> wrapSettings
     | Msg.OpenSettings, State.Home _ -> openSettings ()
+    | Msg.CloseSettings, State.Settings _ -> closeSettings ()
     | Msg.Home _, _ -> state, Cmd.none
     | Msg.Settings _, _ -> state, Cmd.none
     | Msg.OpenSettings, _ -> state, Cmd.none
+    | Msg.CloseSettings, _ -> state, Cmd.none
