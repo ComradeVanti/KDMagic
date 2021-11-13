@@ -3,6 +3,7 @@
 open System
 open System.IO
 
+[<RequireQualifiedAccess>]
 type AppDataError = FileNotFound of string
 
 let private localAppDataPath =
@@ -24,5 +25,5 @@ let tryReadAppFile subPath =
             let! content = File.ReadAllTextAsync filePath |> Async.AwaitTask
             return Ok content
         else
-            return Error(FileNotFound filePath)
+            return Error(AppDataError.FileNotFound filePath)
     }

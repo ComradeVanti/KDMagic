@@ -2,16 +2,32 @@
 module KDMagic.App.SettingsPage
 
 open Elmish
+open KDMagic.App.Settings
 
-type State = unit
+type State =
+    | Unloaded
+    | Loaded of Settings
+    | LoadError of SettingsError
 
 [<RequireQualifiedAccess>]
-type Msg = unit
+type Msg =
+    | SettingsLoaded of Settings
+    | LoadError of SettingsError
 
 [<RequireQualifiedAccess>]
 type Emit = unit
 
 
-let initial = (), Cmd.none, None
+let initial () =
 
-let update msg state = state, Cmd.none, None
+    let loadSettings =
+        cmdOfAsyncResult tryLoad () Msg.SettingsLoaded Msg.LoadError
+
+    Unloaded, loadSettings, None
+
+let update msg state =
+    match state, msg with
+    | Unloaded, Msg.SettingsLoaded settings -> Loaded settings, Cmd.none, None
+    | Unloaded, Msg.LoadError error -> LoadError error, Cmd.none, None
+    | _, Msg.SettingsLoaded _ -> state, Cmd.none, None
+    | _, Msg.LoadError _ -> state, Cmd.none, None

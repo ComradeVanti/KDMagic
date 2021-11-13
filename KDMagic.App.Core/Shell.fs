@@ -33,7 +33,7 @@ let private wrapSettings settingsOutput =
     |> wrapChild State.Settings Msg.Settings wrapEmit
 
 
-let openSettings () = SettingsPage.initial |> wrapSettings
+let openSettings () = SettingsPage.initial () |> wrapSettings
 
 
 let initial = HomePage.initial |> wrapHome

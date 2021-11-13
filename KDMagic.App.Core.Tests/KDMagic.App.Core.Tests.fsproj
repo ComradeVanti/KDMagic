@@ -24,6 +24,7 @@
 
     <ItemGroup>
         <Compile Include="HomePageTests.fs"/>
+        <Compile Include="SettingsPageTests.fs"/>
     </ItemGroup>
 
 </Project>

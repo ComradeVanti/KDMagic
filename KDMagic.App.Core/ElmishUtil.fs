@@ -17,3 +17,12 @@ let wrapChild wrapState wrapCmd wrapEmit (state, cmd, emit) =
     let wrappedCmd = cmd |> Cmd.map wrapCmd |> addEmit emit wrapEmit
 
     (wrapState state), wrappedCmd
+
+let cmdOfAsyncResult op arg succToMsg errToMsg =
+
+    let mapResult =
+        function
+        | Ok succ -> succ |> succToMsg
+        | Error err -> err |> errToMsg
+
+    Cmd.OfAsync.perform op arg mapResult

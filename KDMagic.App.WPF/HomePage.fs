@@ -2,10 +2,11 @@
 module KDMagic.App.WPF.HomePage
 
 open Avalonia.Controls
-open KDMagic.App
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.Types
+open KDMagic.App
 
-let view (state: HomePage.State) dispatch =
+let view (state: HomePage.State) dispatch : IView =
 
     let onSettingsButtonClicked _ = dispatch HomePage.Msg.SettingsButtonPressed
 
@@ -13,4 +14,4 @@ let view (state: HomePage.State) dispatch =
         Button.create [ Button.content "Settings"
                         Button.onClick onSettingsButtonClicked ]
 
-    Border.create [ Border.child settingsButton ]
+    Border.create [ Border.child settingsButton ] |> asView
