@@ -120,17 +120,15 @@ let tryParse ctt =
         let! packageType = ctt |> tryParsePackageType
 
         return
-            {
-                FilmTitle = filmTitle
-                ContentType = contentType
-                VersionNumber = versionNumber
-                Dimension = dimension
-                ProjectorAspect = projectorAspect
-                AudioLanguage = audioLanguage
-                SubtitleLanguage = subtitleLanguage
-                Captions = captions
-                AudioFormat = audioFormat
-                Resolution = resolution
-                PackageType = packageType
-            }
+            { FilmTitle = filmTitle
+              ContentType = contentType
+              VersionNumber = versionNumber
+              Dimension = dimension
+              ProjectorAspect = projectorAspect
+              AudioLanguage = audioLanguage
+              SubtitleLanguage = subtitleLanguage
+              Captions = captions
+              AudioFormat = audioFormat
+              Resolution = resolution
+              PackageType = packageType }
     }

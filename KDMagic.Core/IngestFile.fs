@@ -12,13 +12,15 @@ type IngestError =
     | InvalidNotValidBefore of string
     | InvalidNotValidAfter of string
 
+type IngestResult = Result<KDM, IngestError>
+
 let private tryParseDateTime s =
     try
         s |> DateTime.Parse |> Some
     with
     | :? FormatException -> None
 
-let tryIngestFromXml xml =
+let tryIngestFromXml xml : IngestResult =
     match KDMDoc.tryParse xml with
     | Ok doc ->
         res {
@@ -45,11 +47,9 @@ let tryIngestFromXml xml =
                 |> asResult (InvalidNotValidAfter notValidAfter)
 
             return
-                {
-                    ContentInfo = digitalCinemaName
-                    ValidFrom = validFrom
-                    ValidUntil = validUntil
-                }
+                { ContentInfo = digitalCinemaName
+                  ValidFrom = validFrom
+                  ValidUntil = validUntil }
         }
     | Error _ -> Error FileNotKDM
 

@@ -57,23 +57,19 @@ type PackageType =
     | VF
 
 type DigitalCinemaName =
-    {
-        FilmTitle: FilmTitle.T
-        ContentType: ContentType
-        VersionNumber: VersionNumber.T option
-        Dimension: Dimension
-        ProjectorAspect: ProjectorAspect
-        AudioLanguage: Language.T
-        SubtitleLanguage: Language.T option
-        Captions: Captions option
-        AudioFormat: AudioFormat
-        Resolution: Resolution
-        PackageType: PackageType
-    }
+    { FilmTitle: FilmTitle.T
+      ContentType: ContentType
+      VersionNumber: VersionNumber.T option
+      Dimension: Dimension
+      ProjectorAspect: ProjectorAspect
+      AudioLanguage: Language.T
+      SubtitleLanguage: Language.T option
+      Captions: Captions option
+      AudioFormat: AudioFormat
+      Resolution: Resolution
+      PackageType: PackageType }
 
 type KDM =
-    {
-        ContentInfo: DigitalCinemaName
-        ValidFrom: DateTime
-        ValidUntil: DateTime
-    }
+    { ContentInfo: DigitalCinemaName
+      ValidFrom: DateTime
+      ValidUntil: DateTime }

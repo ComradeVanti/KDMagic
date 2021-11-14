@@ -11,8 +11,9 @@ let view (state: HomePage.State) dispatch : IView =
     let onSettingsButtonClicked _ = dispatch HomePage.Msg.SettingsButtonPressed
 
     let settingsButton =
-        Button.create [
-            Button.content "Settings"
-            Button.onClick onSettingsButtonClicked ]
+        Button.create [ Button.content "Settings"
+                        Button.onClick onSettingsButtonClicked
+                        Button.dock Dock.Top ]
 
-    Border.create [ Border.child settingsButton ] |> asView
+    DockPanel.create [ DockPanel.children [ settingsButton ] ]
+    |> asView

@@ -18,6 +18,7 @@
         <Compile Include="AppData.fs"/>
         <Compile Include="Json.fs"/>
         <Compile Include="Settings.fs"/>
+        <Compile Include="KdmIO.fs"/>
         <Compile Include="ElmishUtil.fs"/>
         <Compile Include="HomePage.fs"/>
         <Compile Include="SettingsPage.fs"/>

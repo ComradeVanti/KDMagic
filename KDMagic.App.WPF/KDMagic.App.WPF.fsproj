@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <Compile Include="ViewUtil.fs"/>
+        <Compile Include="KDMListView.fs"/>
         <Compile Include="HomePage.fs"/>
         <Compile Include="SettingsPage.fs"/>
         <Compile Include="Shell.fs"/>

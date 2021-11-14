@@ -20,19 +20,17 @@ let genDigitalCinemaName =
         let! packageType = Arb.generate<PackageType>
 
         return
-            {
-                FilmTitle = filmTitle
-                ContentType = contentType
-                VersionNumber = versionNumber
-                Dimension = dimension
-                ProjectorAspect = projectorAspect
-                AudioLanguage = audioLanguage
-                SubtitleLanguage = subTitleLanguage
-                Captions = captions
-                AudioFormat = audioFormat
-                Resolution = resolution
-                PackageType = packageType
-            }
+            { FilmTitle = filmTitle
+              ContentType = contentType
+              VersionNumber = versionNumber
+              Dimension = dimension
+              ProjectorAspect = projectorAspect
+              AudioLanguage = audioLanguage
+              SubtitleLanguage = subTitleLanguage
+              Captions = captions
+              AudioFormat = audioFormat
+              Resolution = resolution
+              PackageType = packageType }
     }
 
 type ValidDigitalCinemaName = ValidDigitalCinemaName of DigitalCinemaName

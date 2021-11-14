@@ -53,20 +53,18 @@ let toContentTitleText dcn =
     let audioFormat = dcn.AudioFormat |> formatAudioFormat
     let resolution = dcn.Resolution |> formatResolution
 
-    [
-        dcn.FilmTitle |> FilmTitle.value
-        $"{contentType}{version}-{dimension}"
-        $"{dcn.ProjectorAspect}"
-        $"{audio}-{subtitle}{captions}"
-        "US-GB"
-        $"{audioFormat}"
-        $"{resolution}"
-        "Stud"
-        "20210101"
-        "Yee"
-        "SMPTE"
-        $"{dcn.PackageType}"
-    ]
+    [ dcn.FilmTitle |> FilmTitle.value
+      $"{contentType}{version}-{dimension}"
+      $"{dcn.ProjectorAspect}"
+      $"{audio}-{subtitle}{captions}"
+      "US-GB"
+      $"{audioFormat}"
+      $"{resolution}"
+      "Stud"
+      "20210101"
+      "Yee"
+      "SMPTE"
+      $"{dcn.PackageType}" ]
     |> String.concat "_"
 
 let genContentTitleText =

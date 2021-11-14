@@ -8,9 +8,8 @@ open Avalonia.FuncUI.DSL
 open KDMagic.App.Settings
 
 let private loadingScreen =
-    TextBlock.create [
-       TextBlock.dock Dock.Top
-       TextBlock.text "Loading" ]
+    TextBlock.create [ TextBlock.dock Dock.Top
+                       TextBlock.text "Loading" ]
     |> asView
 
 let private viewError error =
@@ -18,9 +17,8 @@ let private viewError error =
         match error with
         | SettingsLoadError.CouldNotParse -> "Could not parse settings"
 
-    TextBlock.create [
-       TextBlock.dock Dock.Top
-       TextBlock.text errorMsg ]
+    TextBlock.create [ TextBlock.dock Dock.Top
+                       TextBlock.text errorMsg ]
     |> asView
 
 let private viewSettings settings dispatch =
@@ -33,23 +31,21 @@ let private viewSettings settings dispatch =
     let onSaveButtonPressed _ = SettingsPage.Msg.Save |> dispatch
 
     let folderPathEditor =
-        StackPanel.create [
-            StackPanel.orientation Orientation.Vertical
-            StackPanel.children [
-                TextBlock.create [ TextBlock.text "KDM-folder path" ]
-                TextBox.create [
-                    TextBox.text settings.KDMFolderPath
-                    TextBox.onTextChanged onKDMFolderPathChanged ] ] ]
+        StackPanel.create [ StackPanel.orientation Orientation.Vertical
+                            StackPanel.children [ TextBlock.create [ TextBlock.text
+                                                                         "KDM-folder path" ]
+                                                  TextBox.create [ TextBox.text
+                                                                       settings.KDMFolderPath
+                                                                   TextBox.onTextChanged
+                                                                       onKDMFolderPathChanged ] ] ]
 
     let saveButton =
-        Button.create [
-            Button.content "Save"
-            Button.onClick onSaveButtonPressed ]
+        Button.create [ Button.content "Save"
+                        Button.onClick onSaveButtonPressed ]
 
-    StackPanel.create [
-        StackPanel.orientation Orientation.Vertical
-        StackPanel.dock Dock.Top
-        StackPanel.children [ folderPathEditor; saveButton ] ]
+    StackPanel.create [ StackPanel.orientation Orientation.Vertical
+                        StackPanel.dock Dock.Top
+                        StackPanel.children [ folderPathEditor; saveButton ] ]
     |> asView
 
 let view (state: SettingsPage.State) dispatch =
@@ -63,11 +59,9 @@ let view (state: SettingsPage.State) dispatch =
         | SettingsPage.State.LoadError error -> viewError error
 
     let exitButton =
-        Button.create [
-            Button.content "Exit"
-            Button.onClick onExitButtonClicked
-            Button.dock Dock.Bottom ]
+        Button.create [ Button.content "Exit"
+                        Button.onClick onExitButtonClicked
+                        Button.dock Dock.Bottom ]
 
-    DockPanel.create [
-        DockPanel.children [ pageContent; exitButton ] ]
+    DockPanel.create [ DockPanel.children [ pageContent; exitButton ] ]
     |> asView

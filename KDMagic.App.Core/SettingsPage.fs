@@ -32,7 +32,7 @@ let initial () = Unloaded, loadCommand, None
 let update msg state =
 
     let closePage = state, Cmd.none, Some Emit.CloseSettings
-    
+
     let noChanges = state, Cmd.none, None
 
     match state, msg with
