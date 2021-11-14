@@ -11,25 +11,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj"/>
+        <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="DomainTypes.fs"/>
-        <Compile Include="AppData.fs"/>
-        <Compile Include="Json.fs"/>
-        <Compile Include="SettingsIO.fs"/>
-        <Compile Include="KdmIO.fs"/>
-        <Compile Include="ElmishUtil.fs"/>
-        <Compile Include="CmdUtil.fs"/>
-        <Compile Include="HomePage.fs"/>
-        <Compile Include="SettingsPage.fs"/>
-        <Compile Include="Shell.fs"/>
+        <Compile Include="DomainTypes.fs" />
+        <Compile Include="IO\AppData.fs" />
+        <Compile Include="IO\Json.fs" />
+        <Compile Include="IO\SettingsIO.fs" />
+        <Compile Include="IO\KdmIO.fs" />
+        <Compile Include="ElmishUtil.fs" />
+        <Compile Include="CmdUtil.fs" />
+        <Compile Include="HomePage.fs" />
+        <Compile Include="SettingsPage.fs" />
+        <Compile Include="Shell.fs" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Elmish" Version="3.1.0"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+        <PackageReference Include="Elmish" Version="3.1.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
 </Project>
