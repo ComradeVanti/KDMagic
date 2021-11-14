@@ -22,7 +22,7 @@ type Msg =
 type Emit = | CloseSettings
 
 let private loadCommand =
-    cmdOfAsyncResult tryLoad () Msg.SettingsLoaded Msg.LoadError
+    Cmd.OfAsync.resultOp tryLoad () Msg.SettingsLoaded Msg.LoadError
 
 let private makeSaveCommand settings =
     Cmd.OfAsync.perform save settings (fun _ -> Msg.SettingsSaved)

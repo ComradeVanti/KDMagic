@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-module KDMagic.ResultUtil
+module KDMagic.ResultBuilder
 
 type ResultBuilder() =
 

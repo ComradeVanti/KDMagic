@@ -1,18 +1,5 @@
-﻿[<AutoOpen>]
-module KDMagic.OptionUtil
-
-type OptionBuilder() =
-
-    member this.Bind(x, f) =
-        match x with
-        | None -> None
-        | Some a -> f a
-
-    member this.Return(x) = Some x
-
-    member this.ReturnFrom(x) = x
-
-let opt = OptionBuilder()
+﻿[<RequireQualifiedAccess>]
+module KDMagic.Option
 
 let asResult error opt =
     match opt with

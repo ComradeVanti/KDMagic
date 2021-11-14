@@ -2,6 +2,7 @@
 module KDMagic.App.HomePage
 
 open Elmish
+open KDMagic.App
 open KDMagic.IngestFile
 
 type State =
@@ -20,7 +21,7 @@ type Emit = | OpenSettings
 
 
 let private loadCommand =
-    cmdOfAsyncResult KdmIO.tryLoadKdms () Msg.KdmsLoaded Msg.KdmLoadError
+    Cmd.OfAsync.resultOp KdmIO.tryLoadKdms () Msg.KdmsLoaded Msg.KdmLoadError
 
 let initial = Loading, loadCommand, None
 

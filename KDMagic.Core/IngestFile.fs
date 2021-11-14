@@ -36,15 +36,15 @@ let tryIngestFromXml xml : IngestResult =
             let! digitalCinemaName =
                 contentTitleText
                 |> DigitalCinemaName.tryParse
-                |> asResult (InvalidDigitalCinemaName contentTitleText)
+                |> Option.asResult (InvalidDigitalCinemaName contentTitleText)
 
             let! validFrom =
                 tryParseDateTime notValidBefore
-                |> asResult (InvalidNotValidBefore notValidBefore)
+                |> Option.asResult (InvalidNotValidBefore notValidBefore)
 
             let! validUntil =
                 tryParseDateTime notValidAfter
-                |> asResult (InvalidNotValidAfter notValidAfter)
+                |> Option.asResult (InvalidNotValidAfter notValidAfter)
 
             return
                 { ContentInfo = digitalCinemaName

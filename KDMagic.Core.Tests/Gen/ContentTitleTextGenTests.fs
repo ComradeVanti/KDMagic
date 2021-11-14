@@ -34,7 +34,7 @@ module ContentTitleTextGenTests =
     [<Property>]
     let ``Fields are seperated by underscores`` (ValidContentTitleText text) =
         let fieldCount = text |> fieldCount
-        let underscoreCount = text |> countItem '_'
+        let underscoreCount = text |> Seq.countItem '_'
         fieldCount = underscoreCount + 1
 
     [<Property>]
@@ -42,7 +42,7 @@ module ContentTitleTextGenTests =
 
         let hasCorrectSubfieldCount field =
             let subfieldCount = field |> subfieldCount
-            let hyphenCount = field |> countItem '-'
+            let hyphenCount = field |> Seq.countItem '-'
             subfieldCount = hyphenCount + 1
 
         let fields = text |> fields |> Gen.elements |> Arb.fromGen

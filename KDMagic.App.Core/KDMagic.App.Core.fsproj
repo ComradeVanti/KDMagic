@@ -20,6 +20,7 @@
         <Compile Include="Settings.fs"/>
         <Compile Include="KdmIO.fs"/>
         <Compile Include="ElmishUtil.fs"/>
+        <Compile Include="CmdUtil.fs"/>
         <Compile Include="HomePage.fs"/>
         <Compile Include="SettingsPage.fs"/>
         <Compile Include="Shell.fs"/>
