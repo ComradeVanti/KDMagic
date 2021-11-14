@@ -3,7 +3,6 @@ module KDMagic.App.KdmIO
 
 open System.IO
 open KDMagic
-open KDMagic.App.Settings
 open KDMagic.IngestFile
 
 [<RequireQualifiedAccess>]
@@ -14,7 +13,7 @@ type DirectoryError =
 
 [<RequireQualifiedAccess>]
 type LoadError =
-    | SettingsLoad of SettingsLoadError
+    | SettingsLoad of SettingsIO.LoadError
     | Directory of DirectoryError
 
 let private tryGetKdmPaths folderPath =
@@ -39,7 +38,7 @@ let private tryLoadKdmsFromDirectory folderPath =
 
 let tryLoadKdms () =
     async {
-        let! settingRes = tryLoad ()
+        let! settingRes = SettingsIO.tryLoad ()
 
         match settingRes with
         | Ok settings -> return! tryLoadKdmsFromDirectory settings.KDMFolderPath

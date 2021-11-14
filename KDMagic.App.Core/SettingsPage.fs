@@ -2,17 +2,16 @@
 module KDMagic.App.SettingsPage
 
 open Elmish
-open KDMagic.App.Settings
 
 type State =
     | Unloaded
     | Loaded of Settings
-    | LoadError of SettingsLoadError
+    | LoadError of SettingsIO.LoadError
 
 [<RequireQualifiedAccess>]
 type Msg =
     | SettingsLoaded of Settings
-    | LoadError of SettingsLoadError
+    | LoadError of SettingsIO.LoadError
     | SettingsChanged of Settings
     | Save
     | SettingsSaved
@@ -22,10 +21,10 @@ type Msg =
 type Emit = | CloseSettings
 
 let private loadCommand =
-    Cmd.OfAsync.resultOp tryLoad () Msg.SettingsLoaded Msg.LoadError
+    Cmd.OfAsync.resultOp SettingsIO.tryLoad () Msg.SettingsLoaded Msg.LoadError
 
 let private makeSaveCommand settings =
-    Cmd.OfAsync.perform save settings (fun _ -> Msg.SettingsSaved)
+    Cmd.OfAsync.perform SettingsIO.save settings (fun _ -> Msg.SettingsSaved)
 
 let initial () = Unloaded, loadCommand, None
 

@@ -5,7 +5,6 @@ open Avalonia.Controls
 open Avalonia.Layout
 open KDMagic.App
 open Avalonia.FuncUI.DSL
-open KDMagic.App.Settings
 
 let private loadingScreen =
     TextBlock.create [ TextBlock.dock Dock.Top
@@ -15,7 +14,7 @@ let private loadingScreen =
 let private viewError error =
     let errorMsg =
         match error with
-        | SettingsLoadError.CouldNotParse -> "Could not parse settings"
+        | SettingsIO.LoadError.CouldNotParse -> "Could not parse settings"
 
     TextBlock.create [ TextBlock.dock Dock.Top
                        TextBlock.text errorMsg ]
