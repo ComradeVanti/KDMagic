@@ -4,11 +4,13 @@ module KDMagic.App.SettingsIO
 open KDMagic.App.AppData
 
 [<RequireQualifiedAccess>]
-type LoadError = | CouldNotParse
+type LoadError =
+    | CouldNotRead of File.ReadError
+    | CouldNotParse
 
 let private settingsFileName = "settings.json"
 
-let private defaultSettings = { KDMFolderPath = "" }
+let private defaultSettings = { ImportFolderPath = "" }
 
 let tryLoad () =
     async {
@@ -22,7 +24,8 @@ let tryLoad () =
                 | None -> Error LoadError.CouldNotParse
             | Error error ->
                 match error with
-                | AppDataError.FileNotFound _ -> Ok defaultSettings
+                | File.ReadError.NotFound _ -> Ok defaultSettings
+                | _ -> Error(LoadError.CouldNotRead error)
     }
 
 let save (settings: Settings) =

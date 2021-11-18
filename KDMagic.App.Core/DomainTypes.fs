@@ -1,4 +1,12 @@
 ﻿[<AutoOpen>]
 module KDMagic.App.DomainTypes
 
-type Settings = { KDMFolderPath: string }
+open KDMagic
+
+type Settings = { ImportFolderPath: FilePath }
+
+type FileContent =
+    | ValidKdm of Kdm
+    | Other
+
+type ImportedFile = FilePath * FileContent

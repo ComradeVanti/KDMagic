@@ -3,6 +3,8 @@ module KDMagic.DomainTypes
 
 open System
 
+type FilePath = string
+
 type ContentType =
     | FTR
     | TLR
@@ -69,7 +71,7 @@ type DigitalCinemaName =
       Resolution: Resolution
       PackageType: PackageType }
 
-type KDM =
+type Kdm =
     { ContentInfo: DigitalCinemaName
       ValidFrom: DateTime
       ValidUntil: DateTime }

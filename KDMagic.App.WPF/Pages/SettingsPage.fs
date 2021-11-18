@@ -15,6 +15,10 @@ let private viewError error =
     let errorMsg =
         match error with
         | SettingsIO.LoadError.CouldNotParse -> "Could not parse settings"
+        | SettingsIO.LoadError.CouldNotRead error ->
+            match error with
+            | File.ReadError.NoAccess _ -> "Could not access the settings file"
+            | _ -> "An error occurred while reading the settings file"
 
     TextBlock.create [ TextBlock.dock Dock.Top
                        TextBlock.text errorMsg ]
@@ -23,7 +27,7 @@ let private viewError error =
 let private viewSettings settings dispatch =
 
     let onKDMFolderPathChanged newPath =
-        { settings with KDMFolderPath = newPath }
+        { settings with ImportFolderPath = newPath }
         |> SettingsPage.Msg.SettingsChanged
         |> dispatch
 
@@ -34,7 +38,7 @@ let private viewSettings settings dispatch =
                             StackPanel.children [ TextBlock.create [ TextBlock.text
                                                                          "KDM-folder path" ]
                                                   TextBox.create [ TextBox.text
-                                                                       settings.KDMFolderPath
+                                                                       settings.ImportFolderPath
                                                                    TextBox.onTextChanged
                                                                        onKDMFolderPathChanged ] ] ]
 

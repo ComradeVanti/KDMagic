@@ -1,18 +1,15 @@
-﻿module KDMagic.IngestFile
+﻿module KDMagic.ParseKdm
 
 open System
-open System.IO
 
 type Path = string
 
-type IngestError =
-    | FileNotFound of Path
+[<RequireQualifiedAccess>]
+type KdmParseError =
     | FileNotKDM
     | InvalidDigitalCinemaName of string
     | InvalidNotValidBefore of string
     | InvalidNotValidAfter of string
-
-type IngestResult = Result<KDM, IngestError>
 
 let private tryParseDateTime s =
     try
@@ -20,7 +17,7 @@ let private tryParseDateTime s =
     with
     | :? FormatException -> None
 
-let tryIngestFromXml xml : IngestResult =
+let tryParseXml xml =
     match KDMDoc.tryParse xml with
     | Ok doc ->
         res {
@@ -36,28 +33,25 @@ let tryIngestFromXml xml : IngestResult =
             let! digitalCinemaName =
                 contentTitleText
                 |> DigitalCinemaName.tryParse
-                |> Option.asResult (InvalidDigitalCinemaName contentTitleText)
+                |> Option.asResult (
+                    KdmParseError.InvalidDigitalCinemaName contentTitleText
+                )
 
             let! validFrom =
                 tryParseDateTime notValidBefore
-                |> Option.asResult (InvalidNotValidBefore notValidBefore)
+                |> Option.asResult (
+                    KdmParseError.InvalidNotValidBefore notValidBefore
+                )
 
             let! validUntil =
                 tryParseDateTime notValidAfter
-                |> Option.asResult (InvalidNotValidAfter notValidAfter)
+                |> Option.asResult (
+                    KdmParseError.InvalidNotValidAfter notValidAfter
+                )
 
             return
                 { ContentInfo = digitalCinemaName
                   ValidFrom = validFrom
                   ValidUntil = validUntil }
         }
-    | Error _ -> Error FileNotKDM
-
-let tryIngestFromPath path =
-    async {
-        if File.Exists path then
-            let! xml = File.ReadAllTextAsync path |> Async.AwaitTask
-            return tryIngestFromXml xml
-        else
-            return Error(FileNotFound path)
-    }
+    | Error _ -> Error KdmParseError.FileNotKDM

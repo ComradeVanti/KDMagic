@@ -3,9 +3,6 @@
 open System
 open System.IO
 
-[<RequireQualifiedAccess>]
-type AppDataError = FileNotFound of string
-
 let private localAppDataPath =
     Environment.GetFolderPath Environment.SpecialFolder.LocalApplicationData
 
@@ -23,12 +20,7 @@ let tryReadAppFile subPath =
     async {
         requireAppFolder ()
         let filePath = Path.Combine(kDMagicDataPath, subPath)
-
-        if File.Exists filePath then
-            let! content = File.ReadAllTextAsync filePath |> Async.AwaitTask
-            return Ok content
-        else
-            return Error(AppDataError.FileNotFound filePath)
+        return! File.tryRead filePath
     }
 
 let writeAppFile subPath content =

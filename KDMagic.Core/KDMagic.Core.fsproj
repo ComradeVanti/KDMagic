@@ -24,7 +24,7 @@
         <Compile Include="ContentTitleText.fs"/>
         <Compile Include="DigitalCinemaName.fs"/>
         <Compile Include="KDMDoc.fs"/>
-        <Compile Include="IngestFile.fs"/>
+        <Compile Include="ParseKdm.fs"/>
     </ItemGroup>
 
     <ItemGroup>
