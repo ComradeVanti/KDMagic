@@ -1,6 +1,7 @@
 ﻿[<RequireQualifiedAccess>]
 module KDMagic.App.WPF.FileListComp
 
+open System.IO
 open Avalonia.Controls
 open Avalonia.Controls.Primitives
 open Avalonia.Layout
@@ -15,22 +16,27 @@ let private loadingScreen =
     TextBlock.create [ TextBlock.text "Importing files" ]
     |> asView
 
+let private viewOther (path: string) =
+    let fileName = Path.GetFileName path
+
+    TextBlock.create [ TextBlock.text $"Non-Kdm file \"{fileName}\"" ]
+    |> asView
+
 let private viewResults results dispatch =
 
     let viewResult result =
-
-        let text =
-            match result with
-            | Ok (path, content) ->
-                match content with
-                | ValidKdm kmd -> "Kdm"
-                | Other -> "Other"
-            | Error error ->
-                match error with
-                | FileImportError.InvalidKdm parseError -> "Invalid kdm"
-                | FileImportError.ReadError readError -> "Read error"
-
-        TextBlock.create [ TextBlock.text text ] |> asView
+        match result with
+        | Ok (path, content) ->
+            match content with
+            | ValidKdm kmd ->
+                TextBlock.create [ TextBlock.text "Kdm" ] |> asView
+            | Other -> viewOther path
+        | Error error ->
+            match error with
+            | FileImportError.InvalidKdm parseError ->
+                TextBlock.create [ TextBlock.text "Invalid kdm" ] |> asView
+            | FileImportError.ReadError readError ->
+                TextBlock.create [ TextBlock.text "Read-error" ] |> asView
 
     StackPanel.create [ StackPanel.children (results |> List.map viewResult)
                         StackPanel.orientation Orientation.Vertical
@@ -42,7 +48,7 @@ let private viewImportError error =
 
     let errorText =
         match error with
-        | ImportFiles.ImportError.Directory directoryError ->
+        | ImportError.Directory directoryError ->
             match directoryError with
             | Directory.OpenError.InvalidPath ->
                 "The import-directory has an invalid path"
