@@ -17,9 +17,17 @@ let private tryParseInt s =
     with
     | :? FormatException -> None
 
-let private tryFindStringMatch possibilities s =
+let private tryFindStringMatchExact possibilities s =
     possibilities
     |> List.tryFind (fst >> (=) s)
+    |> Option.map snd
+
+let private tryFindStringMatchContains
+    (possibilities: (string * _) list)
+    (s: string)
+    =
+    possibilities
+    |> List.tryFind (fst >> s.Contains)
     |> Option.map snd
 
 
@@ -79,31 +87,31 @@ let private tryParseCaptions ctt =
     ctt
     |> tryGetSubfield (3, 2)
     |> Option.bind (
-        tryFindStringMatch [ ("OCAP", Open Rendered)
-                             ("ocap", Open Burned)
-                             ("CCAP", Closed Rendered)
-                             ("ccap", Closed Burned) ]
+        tryFindStringMatchExact [ ("OCAP", Open Rendered)
+                                  ("ocap", Open Burned)
+                                  ("CCAP", Closed Rendered)
+                                  ("ccap", Closed Burned) ]
     )
 
 let private tryParseAudioFormat ctt =
     ctt
     |> tryGetSubfield (5, 0)
     |> Option.bind (
-        tryFindStringMatch [ ("51", Surround51)
-                             ("71", Surround71)
-                             ("10", Mono)
-                             ("20", Stereo)
-                             ("21", StereoSub)
-                             ("MOS", MOS) ]
+        tryFindStringMatchContains [ ("51", Surround51)
+                                     ("71", Surround71)
+                                     ("10", Mono)
+                                     ("20", Stereo)
+                                     ("21", StereoSub)
+                                     ("MOS", MOS) ]
     )
 
 let private tryParseResolution ctt =
     ctt
     |> tryGetField 6
     |> Option.bind (
-        tryFindStringMatch [ ("2K", TwoK)
-                             ("4K", FourK)
-                             ("8K", EightK) ]
+        tryFindStringMatchExact [ ("2K", TwoK)
+                                  ("4K", FourK)
+                                  ("8K", EightK) ]
     )
 
 let private tryParsePackageType ctt =
