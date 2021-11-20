@@ -22,6 +22,18 @@ let private viewOther (path: string) =
     TextBlock.create [ TextBlock.text $"Non-Kdm file \"{fileName}\"" ]
     |> asView
 
+let private viewReadError error =
+    let fileName =
+        match error with
+        | File.ReadError.InvalidPath path -> Path.GetFileName path
+        | File.ReadError.NoAccess path -> Path.GetFileName path
+        | File.ReadError.NotFound path -> Path.GetFileName path
+        | File.ReadError.Unknown _ -> "???"
+
+    TextBlock.create [ TextBlock.text $"Could not read file \"{fileName}\"" ]
+    |> asView
+
+
 let private viewResults results dispatch =
 
     let viewResult result =
@@ -35,8 +47,7 @@ let private viewResults results dispatch =
             match error with
             | FileImportError.InvalidKdm parseError ->
                 TextBlock.create [ TextBlock.text "Invalid kdm" ] |> asView
-            | FileImportError.ReadError readError ->
-                TextBlock.create [ TextBlock.text "Read-error" ] |> asView
+            | FileImportError.ReadError readError -> viewReadError readError
 
     StackPanel.create [ StackPanel.children (results |> List.map viewResult)
                         StackPanel.orientation Orientation.Vertical
