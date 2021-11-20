@@ -5,7 +5,7 @@ type T = private T of string
 
 let isValid title =
     let lenght = title |> String.length
-    lenght >= 1 && lenght <= 14
+    lenght >= 1 && lenght <= 20
 
 let make title = T title
 
