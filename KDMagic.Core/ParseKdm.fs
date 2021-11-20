@@ -22,7 +22,7 @@ let tryParseXml xml =
     | Ok doc ->
         res {
             let contentTitleText =
-                doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentTitleText
+                doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentTitleText.Trim ()
 
             let notValidBefore =
                 doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentKeysNotValidBefore
