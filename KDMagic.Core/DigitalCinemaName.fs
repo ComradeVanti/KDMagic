@@ -63,11 +63,7 @@ let private tryParseVersionNumber ctt =
 let private tryParseDimension ctt =
     ctt
     |> tryGetField 1
-    |> Option.bind
-        (fun field ->
-            if field.Contains "2D" then Some TwoD
-            elif field.Contains "3D" then Some ThreeD
-            else None)
+    |> Option.map (fun field -> if field.Contains "3D" then ThreeD else TwoD)
 
 let private tryParseProjectorAspect ctt =
     ctt
