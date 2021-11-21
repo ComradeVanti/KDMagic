@@ -38,6 +38,6 @@ module DigitalCinemaNameTests =
             |@ "An unknown property did not match"
 
         match ctt |> DigitalCinemaName.tryParse with
-        | Some parsed -> parsed |> matchesOriginal
-        | None -> false |@ "Could not parse"
+        | Ok parsed -> parsed |> matchesOriginal
+        | Error e -> false |@ $"Could not parse. Error: {e}"
         |@ $"CTT: {ctt}"
