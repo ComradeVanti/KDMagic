@@ -13,3 +13,9 @@ let tryParseInt (s: string) =
         s |> int |> Some
     with
     | :? FormatException -> None
+
+let tryParseDateTime s =
+    try
+        s |> DateTime.Parse |> Some
+    with
+    | :? FormatException -> None

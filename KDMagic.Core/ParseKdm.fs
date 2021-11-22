@@ -1,8 +1,8 @@
 ﻿module KDMagic.ParseKdm
 
-open System
 open KDMagic
 open KDMagic.ParseDCN
+open ParsingUtil
 
 type Path = string
 
@@ -12,12 +12,6 @@ type KdmParseError =
     | InvalidDigitalCinemaName of CTT * DCNParsingError
     | InvalidNotValidBefore of string
     | InvalidNotValidAfter of string
-
-let private tryParseDateTime s =
-    try
-        s |> DateTime.Parse |> Some
-    with
-    | :? FormatException -> None
 
 let tryParseXml xml =
     match KDMDoc.tryParse xml with
