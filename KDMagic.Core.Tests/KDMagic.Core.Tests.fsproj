@@ -9,9 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FsCheck.Xunit" Version="2.16.3"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4"/>
-        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="FsCheck.Xunit" Version="2.16.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+        <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -23,26 +23,26 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj"/>
-        <ProjectReference Include="..\KDMagic.TestUtil\KDMagic.TestUtil.fsproj"/>
+        <ProjectReference Include="..\KDMagic.Core\KDMagic.Core.fsproj" />
+        <ProjectReference Include="..\KDMagic.TestUtil\KDMagic.TestUtil.fsproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="Gen\FilmTitleGen.fs"/>
-        <Compile Include="Gen\FilmTitleGenTests.fs"/>
-        <Compile Include="Gen\VersionNumberGen.fs"/>
-        <Compile Include="Gen\VersionNumberGenTests.fs"/>
-        <Compile Include="Gen\LanguageGen.fs"/>
-        <Compile Include="Gen\LanguageGenTests.fs"/>
-        <Compile Include="Gen\DigitalCinemaNameGen.fs"/>
-        <Compile Include="Gen\ContentTitleTextGen.fs"/>
-        <Compile Include="Gen\ContentTitleTextGenTests.fs"/>
-        <Compile Include="Gen\KDMXMLGen.fs"/>
-        <Compile Include="Gen\KDMXMLGenTests.fs"/>
-        <Compile Include="FilmTitleTests.fs"/>
-        <Compile Include="VersionNumberTests.fs"/>
-        <Compile Include="LanguageTests.fs"/>
-        <Compile Include="DigitalCinemaNameTests.fs"/>
+        <Compile Include="Gen\FilmTitleGen.fs" />
+        <Compile Include="Gen\FilmTitleGenTests.fs" />
+        <Compile Include="Gen\VersionNumberGen.fs" />
+        <Compile Include="Gen\VersionNumberGenTests.fs" />
+        <Compile Include="Gen\LanguageGen.fs" />
+        <Compile Include="Gen\LanguageGenTests.fs" />
+        <Compile Include="Gen\DCNGen.fs" />
+        <Compile Include="Gen\CTTGen.fs" />
+        <Compile Include="Gen\CTTGenTests.fs" />
+        <Compile Include="Gen\KDMXMLGen.fs" />
+        <Compile Include="Gen\KDMXMLGenTests.fs" />
+        <Compile Include="FilmTitleTests.fs" />
+        <Compile Include="VersionNumberTests.fs" />
+        <Compile Include="LanguageTests.fs" />
+        <Compile Include="ParseDCNTests.fs" />
     </ItemGroup>
 
 </Project>

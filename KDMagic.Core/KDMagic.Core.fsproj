@@ -11,24 +11,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="ErrorUtil.fs"/>
-        <Compile Include="OptionUtil.fs"/>
-        <Compile Include="OptionBuilder.fs"/>
-        <Compile Include="ResultBuilder.fs"/>
-        <Compile Include="SeqUtil.fs"/>
-        <Compile Include="Async.fs"/>
-        <Compile Include="FilmTitle.fs"/>
-        <Compile Include="VersionNumber.fs"/>
-        <Compile Include="Language.fs"/>
-        <Compile Include="DomainTypes.fs"/>
-        <Compile Include="ContentTitleText.fs"/>
-        <Compile Include="DigitalCinemaName.fs"/>
-        <Compile Include="KDMDoc.fs"/>
-        <Compile Include="ParseKdm.fs"/>
+        <Compile Include="ErrorUtil.fs" />
+        <Compile Include="OptionUtil.fs" />
+        <Compile Include="OptionBuilder.fs" />
+        <Compile Include="ResultBuilder.fs" />
+        <Compile Include="SeqUtil.fs" />
+        <Compile Include="Async.fs" />
+        <Compile Include="FilmTitle.fs" />
+        <Compile Include="VersionNumber.fs" />
+        <Compile Include="Language.fs" />
+        <Compile Include="DomainTypes.fs" />
+        <Compile Include="CTT.fs" />
+        <Compile Include="ParseDCN.fs" />
+        <Compile Include="KDMDoc.fs" />
+        <Compile Include="ParseKdm.fs" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FSharp.Data" Version="4.2.4"/>
+        <PackageReference Include="FSharp.Data" Version="4.2.4" />
     </ItemGroup>
 
 </Project>

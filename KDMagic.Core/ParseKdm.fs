@@ -2,13 +2,14 @@
 
 open System
 open KDMagic
+open KDMagic.ParseDCN
 
 type Path = string
 
 [<RequireQualifiedAccess>]
 type KdmParseError =
     | FileNotKDM
-    | InvalidDigitalCinemaName of string * DigitalCinemaName.ParsingError
+    | InvalidDigitalCinemaName of CTT * DCNParsingError
     | InvalidNotValidBefore of string
     | InvalidNotValidAfter of string
 
@@ -23,8 +24,9 @@ let tryParseXml xml =
     | Ok doc ->
         res {
             let contentTitleText =
-                doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentTitleText.Trim
-                    ()
+                (doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentTitleText.Trim
+                    ())
+                |> CTT.make
 
             let notValidBefore =
                 doc.AuthenticatedPublic.RequiredExtensions.KdmRequiredExtensions.ContentKeysNotValidBefore
@@ -34,7 +36,7 @@ let tryParseXml xml =
 
             let! digitalCinemaName =
                 contentTitleText
-                |> DigitalCinemaName.tryParse
+                |> tryParse
                 |> Result.mapError
                     (fun error ->
                         KdmParseError.InvalidDigitalCinemaName(

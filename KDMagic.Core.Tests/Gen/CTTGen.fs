@@ -1,4 +1,4 @@
-﻿module KDMagic.ContentTitleTextGen
+﻿module KDMagic.CTTGen
 
 open FsCheck
 
@@ -66,12 +66,13 @@ let toContentTitleText dcn =
       "SMPTE"
       $"{dcn.PackageType}" ]
     |> String.concat "_"
+    |> CTT.make
 
-let genContentTitleText =
-    DigitalCinemaNameGen.genDigitalCinemaName
+let genCTT =
+    DCNGen.genDCN
     |> Gen.map toContentTitleText
 
-type ValidContentTitleText = ValidContentTitleText of string
+type ValidCTT = ValidCTT of CTT
 
-type ArbContentTitleTexts =
-    static member Valid = genContentTitleText |> asArbOf ValidContentTitleText
+type ArbCTTs =
+    static member Valid = genCTT |> asArbOf ValidCTT

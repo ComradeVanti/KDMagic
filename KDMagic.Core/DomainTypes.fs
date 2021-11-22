@@ -58,7 +58,7 @@ type PackageType =
     | OV
     | VF
 
-type DigitalCinemaName =
+type DCN =
     { FilmTitle: FilmTitle.T
       ContentType: ContentType
       VersionNumber: VersionNumber.T option
@@ -72,6 +72,6 @@ type DigitalCinemaName =
       PackageType: PackageType }
 
 type Kdm =
-    { ContentInfo: DigitalCinemaName
+    { ContentInfo: DCN
       ValidFrom: DateTime
       ValidUntil: DateTime }

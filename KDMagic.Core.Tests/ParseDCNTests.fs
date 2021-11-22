@@ -2,15 +2,15 @@
 
 open FsCheck
 open FsCheck.Xunit
-open KDMagic.ContentTitleTextGen
-open KDMagic.DigitalCinemaNameGen
+open KDMagic.CTTGen
+open KDMagic.DCNGen
 
-[<Properties(Arbitrary = [| typeof<ArbDigitalCinemaNames> |])>]
-module DigitalCinemaNameTests =
+[<Properties(Arbitrary = [| typeof<ArbDCNs> |])>]
+module ParseDCNTests =
 
     [<Property>]
     let ``Digital cinema-names are parsed correctly``
-        (ValidDigitalCinemaName original)
+        (ValidDCN original)
         =
         let ctt = original |> toContentTitleText
 
@@ -37,7 +37,7 @@ module DigitalCinemaNameTests =
             .&. (parsed = original)
             |@ "An unknown property did not match"
 
-        match ctt |> DigitalCinemaName.tryParse with
+        match ctt |> ParseDCN.tryParse with
         | Ok parsed -> parsed |> matchesOriginal
         | Error e -> false |@ $"Could not parse. Error: {e}"
         |@ $"CTT: {ctt}"

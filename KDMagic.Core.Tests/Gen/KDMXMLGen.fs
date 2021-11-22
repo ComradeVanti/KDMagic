@@ -2,7 +2,7 @@
 
 open System
 open FsCheck
-open ContentTitleTextGen
+open CTTGen
 
 let private baseDate = DateTime(2000, 1, 1)
 
@@ -30,13 +30,13 @@ let private formatDate (date: DateTime) =
 
 let genKDMXML =
     gen {
-        let! contentTitleText = genContentTitleText
+        let! ctt = genCTT
         let! startDate = genDateAfter baseDate
         let! endDate = genDateAfter startDate
 
         return
             template
-                .Replace("[CTT]", contentTitleText)
+                .Replace("[CTT]", (ctt |> CTT.content))
                 .Replace("[Start]", startDate |> formatDate)
                 .Replace("[End]", endDate |> formatDate)
     }

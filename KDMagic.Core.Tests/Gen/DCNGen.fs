@@ -1,11 +1,11 @@
-﻿module KDMagic.DigitalCinemaNameGen
+﻿module KDMagic.DCNGen
 
 open FsCheck
 open KDMagic.FilmTitleGen
 open KDMagic.VersionNumberGen
 open KDMagic.LanguageGen
 
-let genDigitalCinemaName =
+let genDCN =
     gen {
         let! filmTitle = genFilmTitle
         let! contentType = Arb.generate<ContentType>
@@ -33,7 +33,7 @@ let genDigitalCinemaName =
               PackageType = packageType }
     }
 
-type ValidDigitalCinemaName = ValidDigitalCinemaName of DigitalCinemaName
+type ValidDCN = ValidDCN of DCN
 
-type ArbDigitalCinemaNames =
-    static member Valid = genDigitalCinemaName |> asArbOf ValidDigitalCinemaName
+type ArbDCNs =
+    static member Valid = genDCN |> asArbOf ValidDCN
