@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <Compile Include="ErrorUtil.fs" />
+        <Compile Include="ParsingUtil.fs" />
         <Compile Include="OptionUtil.fs" />
         <Compile Include="OptionBuilder.fs" />
         <Compile Include="ResultBuilder.fs" />

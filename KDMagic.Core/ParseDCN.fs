@@ -1,7 +1,7 @@
 ﻿module KDMagic.ParseDCN
 
-open System
-open Microsoft.FSharp.Reflection
+open KDMagic
+open ParsingUtil
 
 [<RequireQualifiedAccess>]
 type DCNParsingError =
@@ -33,16 +33,6 @@ let private audioFormatTags =
 
 let private resolutionTags = [ ("2K", TwoK); ("4K", FourK); ("8K", EightK) ]
 
-let private tryParseUnion<'a> (s: string) =
-    FSharpType.GetUnionCases typeof<'a>
-    |> Array.tryFind (fun case -> case.Name = s)
-    |> Option.map (fun case -> FSharpValue.MakeUnion(case, [||]) :?> 'a)
-
-let private tryParseInt s =
-    try
-        s |> int |> Some
-    with
-    | :? FormatException -> None
 
 let private tryParseSubfield index parser ctt =
     ctt
