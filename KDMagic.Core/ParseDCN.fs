@@ -157,14 +157,14 @@ let private tryParseResolution ctt =
     ctt |> tryParseField 6 parser
 
 let private tryParsePackageType ctt =
-    let parser field =
-        let content = field |> Field.content
+    let parser subfield =
+        let content = subfield |> Subfield.content
 
         content
         |> tryParseUnion<PackageType>
         |> Option.asResult (DCNParsingError.InvalidPackageName content)
 
-    ctt |> tryParseField 11 parser
+    ctt |> tryParseSubfield (11,0) parser
 
 let tryParse ctt =
     res {
