@@ -6,6 +6,7 @@ open Avalonia.Controls
 open Avalonia.Controls.Primitives
 open Avalonia.Layout
 open KDMagic.App
+open KDMagic
 open Avalonia.FuncUI.DSL
 open KDMagic.App.ImportFiles
 
@@ -33,6 +34,12 @@ let private viewReadError error =
     TextBlock.create [ TextBlock.text $"Could not read file \"{fileName}\"" ]
     |> asView
 
+let private viewKdm dispatch kdm =
+
+    let filmTitle = kdm.ContentInfo.FilmTitle |> FilmTitle.value
+
+    TextBlock.create [ TextBlock.text filmTitle ] |> asView
+
 
 let private viewResults results dispatch =
 
@@ -40,8 +47,7 @@ let private viewResults results dispatch =
         match result with
         | Ok (path, content) ->
             match content with
-            | ValidKdm kmd ->
-                TextBlock.create [ TextBlock.text "Kdm" ] |> asView
+            | ValidKdm kdm -> kdm |> viewKdm dispatch
             | Other -> viewOther path
         | Error error ->
             match error with
