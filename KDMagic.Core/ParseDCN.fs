@@ -1,195 +1,201 @@
 ﻿module KDMagic.ParseDCN
 
+open System.Text.RegularExpressions
 open KDMagic
-open ParsingUtil
+open KDMagic.ParsingUtil
 
 [<RequireQualifiedAccess>]
 type DCNParsingError =
-    | FieldNotFound of int
-    | SubfieldNotFound of (int * int)
-    | InvalidFilmTitle of string
-    | InvalidContentType of string
-    | InvalidProjectorAspect of string
-    | InvalidAudioLanguage of string
-    | InvalidCaptions of string
-    | InvalidAudioFormat of string
-    | InvalidResolution of string
-    | InvalidPackageName of string
+    | InvalidCTT of string
+    | MissingRequiredItem of string
+    | CouldNotParse of string
 
 
-let private captionTags =
-    [ ("OCAP", Open Rendered)
-      ("ocap", Open Burned)
-      ("CCAP", Closed Rendered)
-      ("ccap", Closed Burned) ]
+let dcnRegex =
+    Regex
+        @"(?'FilmTitle'^[^_]+)_(?'ContentType'[A-Z]+|-T|-F)-?(?'VersionNumber'\d+)?(?:-[^_-]+)*-?(?<!3D)(?'Dimension'3D)?(?:-[^_-]+)*_(?'Aspect'[FSC])[^_]*_(?'AudioLang'[a-zA-Z]+)-(?'SubLang'[a-zA-Z]+)-?(?'Captions'CCAP|ccap|OCAP|ocap)?.*_(?:[^_]*-)?(?'AudioFormat'51|71|10|20|21|MOS|IAB)(?:-[^_]*)?_(?'Resolution'2K|4K)_.*_(?'PackageType'OV|VF).*$"
 
-let private audioFormatTags =
-    [ ("51", Surround51)
-      ("71", Surround71)
-      ("10", Mono)
-      ("20", Stereo)
-      ("21", StereoSub)
-      ("MOS", MOS) ]
+let private tryGetNamedGroup (name: string) (regMatch: Match) =
+    let text = regMatch.Groups.[name].Value
+    if text = "" then None else Some text
 
-let private resolutionTags = [ ("2K", TwoK); ("4K", FourK); ("8K", EightK) ]
+let private tryFind name regMatch =
+    regMatch
+    |> tryGetNamedGroup name
+    |> Option.asResult (DCNParsingError.MissingRequiredItem name)
+
+let private parsedWith parser =
+
+    let tryParse s =
+        s
+        |> parser
+        |> Option.asResult (DCNParsingError.CouldNotParse s)
+
+    Result.bind tryParse
+
+let optional =
+    function
+    | Ok item -> Ok(Some item)
+    | Error e ->
+        match e with
+        | DCNParsingError.MissingRequiredItem _ -> Ok None
+        | _ -> Error e
+
+let isMissing value =
+    function
+    | Ok item -> Ok item
+    | Error e ->
+        match e with
+        | DCNParsingError.MissingRequiredItem _ -> Ok value
+        | _ -> Error e
 
 
-let private tryParseSubfield index parser ctt =
-    ctt
-    |> CTT.tryGetSubfield index
-    |> function
-        | Some field -> parser field
-        | None -> Error(DCNParsingError.SubfieldNotFound index)
+let private tryMatchUnion options s =
+    options
+    |> List.filter (fst >> (=) s)
+    |> List.map snd
+    |> List.tryHead
 
-let private tryParseField index parser ctt =
-    ctt
-    |> CTT.tryGetField index
-    |> function
-        | Some field -> parser field
-        | None -> Error(DCNParsingError.FieldNotFound index)
+let private tryParseContentType s =
+    s
+    |> tryMatchUnion [ ("FTR", FTR)
+                       ("TLR", TLR)
+                       ("TSR", TSR)
+                       ("RTG-T", RTG_T)
+                       ("RTG-F", RTG_F)
+                       ("ADV", ADV)
+                       ("SHR", SHR)
+                       ("XSN", XSN)
+                       ("PSA", PSA)
+                       ("POL", POL)
+                       ("CLP", CLP)
+                       ("PRO", PRO)
+                       ("STR", STR)
+                       ("EPS", EPS)
+                       ("HLT", HLT)
+                       ("EVT", EVT) ]
 
-let private tryParseFieldContent index parser ctt =
-    ctt |> tryParseField index (Field.content >> parser)
+let private tryParseCaptions s =
+    s
+    |> tryMatchUnion [ ("OCAP", Open Rendered)
+                       ("ocap", Open Burned)
+                       ("CCAP", Closed Rendered)
+                       ("ccap", Closed Burned) ]
 
-let private tryParseSubfieldContent index parser ctt =
-    ctt |> tryParseSubfield index (Subfield.content >> parser)
+let private tryParseAudioFormat s =
+    s
+    |> tryMatchUnion [ ("51", Surround51)
+                       ("71", Surround71)
+                       ("10", Mono)
+                       ("20", Stereo)
+                       ("21", StereoSub)
+                       ("MOS", MOS) ]
 
-let private tryParseFilmTitle ctt =
+let private tryParseResolution s =
+    s
+    |> tryMatchUnion [ ("2K", TwoK)
+                       ("4K", FourK)
+                       ("8K", EightK) ]
 
-    let parser content =
-        content
-        |> FilmTitle.tryMake
-        |> Option.asResult (DCNParsingError.InvalidFilmTitle content)
+let private tryParseAspect s =
+    s |> tryMatchUnion [ ("F", F); ("S", S); ("C", C) ]
 
-    ctt |> tryParseFieldContent 0 parser
+let private tryParsePackageType s =
+    s |> tryMatchUnion [ ("OV", OV); ("VF", VF) ]
 
-let private tryParseContentType ctt =
 
-    let parser field =
-        if field |> Field.contains "RTG-T" then
-            Ok RTG_T
-        elif field |> Field.contains "RTG-F" then
-            Ok RTG_F
-        else
-            field
-            |> Field.tryGetSubfield 0
-            |> Option.map Subfield.content
-            |> Option.bind tryParseUnion<ContentType>
-            |> Option.asResult (
-                DCNParsingError.InvalidContentType(field |> Field.content)
-            )
+let private tryMatchFilmTitle regMatch =
+    regMatch
+    |> tryFind "FilmTitle"
+    |> parsedWith FilmTitle.tryMake
 
-    ctt |> tryParseField 1 parser
+let private tryMatchContentType regMatch =
+    regMatch
+    |> tryFind "ContentType"
+    |> parsedWith tryParseContentType
 
-let private tryParseVersionNumber ctt =
+let private tryMatchVersionNumber regMatch =
+    regMatch
+    |> tryFind "VersionNumber"
+    |> parsedWith (tryParseInt >> Option.bind VersionNumber.tryMake)
+    |> optional
 
-    let isNumber s = s |> tryParseInt |> Option.isSome
+let private tryMatchDimension regMatch =
+    regMatch
+    |> tryFind "Dimension"
+    |> parsedWith (fun _ -> Some ThreeD)
+    |> isMissing TwoD
 
-    let parser field =
-        field
-        |> Field.tryFindSubfield (Subfield.content >> isNumber)
-        |> Option.bind (Subfield.content >> tryParseInt)
-        |> Option.bind VersionNumber.tryMake
-        |> Ok
+let private tryMatchAspect regMatch =
+    regMatch |> tryFind "Aspect" |> parsedWith tryParseAspect
 
-    ctt |> tryParseField 1 parser
+let private tryMatchAudioLang regMatch =
+    regMatch
+    |> tryFind "AudioLang"
+    |> parsedWith Language.tryMake
 
-let private tryParseDimension ctt =
+let private tryMatchSubLang regMatch =
+    regMatch
+    |> tryFind "SubLang"
+    |> parsedWith
+        (fun s ->
+            if s = "XX" then
+                Some None
+            else
+                s |> Language.tryMake |> Option.map Some)
 
-    let parser field =
-        if field |> Field.contains "3D" then ThreeD else TwoD
-        |> Ok
+let private tryMatchCaptions regMatch =
+    regMatch
+    |> tryFind "Captions"
+    |> parsedWith tryParseCaptions
+    |> optional
 
-    ctt |> tryParseField 1 parser
+let private tryMatchAudioFormat regMatch =
+    regMatch
+    |> tryFind "AudioFormat"
+    |> parsedWith tryParseAudioFormat
 
-let private tryParseProjectorAspect ctt =
+let private tryMatchResolution regMatch =
+    regMatch
+    |> tryFind "Resolution"
+    |> parsedWith tryParseResolution
 
-    let parser content =
-        content
-        |> tryParseUnion<ProjectorAspect>
-        |> Option.asResult (DCNParsingError.InvalidProjectorAspect content)
+let private tryMatchPackageType regMatch =
+    regMatch
+    |> tryFind "PackageType"
+    |> parsedWith tryParsePackageType
 
-    ctt |> tryParseSubfieldContent (2, 0) parser
-
-let private tryParseAudioLanguage ctt =
-
-    let parser content =
-        content
-        |> Language.tryMake
-        |> Option.asResult (DCNParsingError.InvalidAudioLanguage content)
-
-    ctt |> tryParseSubfieldContent (3, 0) parser
-
-let private tryParseSubtitleLanguage ctt =
-
-    let parser content =
-        if content = "XX" then None else content |> Language.tryMake
-        |> Ok
-
-    ctt |> tryParseSubfieldContent (3, 1) parser
-
-let private tryParseCaptions ctt =
-
-    let parser field = field |> Field.tryMatchTag captionTags |> Ok
-
-    ctt |> tryParseField 3 parser
-
-let private tryParseAudioFormat ctt =
-
-    let parser subfield =
-        subfield
-        |> Subfield.tryMatchTag audioFormatTags
-        |> Option.asResult (
-            DCNParsingError.InvalidAudioFormat(subfield |> Subfield.content)
-        )
-
-    ctt |> tryParseSubfield (5, 0) parser
-
-let private tryParseResolution ctt =
-
-    let parser field =
-        field
-        |> Field.tryMatchTag resolutionTags
-        |> Option.asResult (
-            DCNParsingError.InvalidResolution(field |> Field.content)
-        )
-
-    ctt |> tryParseField 6 parser
-
-let private tryParsePackageType ctt =
-    let parser subfield =
-        let content = subfield |> Subfield.content
-
-        content
-        |> tryParseUnion<PackageType>
-        |> Option.asResult (DCNParsingError.InvalidPackageName content)
-
-    ctt |> tryParseSubfield (11,0) parser
 
 let tryParse ctt =
-    res {
-        let! filmTitle = ctt |> tryParseFilmTitle
-        let! contentType = ctt |> tryParseContentType
-        let! versionNumber = ctt |> tryParseVersionNumber
-        let! dimension = ctt |> tryParseDimension
-        let! projectorAspect = ctt |> tryParseProjectorAspect
-        let! audioLanguage = ctt |> tryParseAudioLanguage
-        let! subtitleLanguage = ctt |> tryParseSubtitleLanguage
-        let! captions = ctt |> tryParseCaptions
-        let! audioFormat = ctt |> tryParseAudioFormat
-        let! resolution = ctt |> tryParseResolution
-        let! packageType = ctt |> tryParsePackageType
+    let content = ctt |> CTT.content
+    let regMatch = content |> dcnRegex.Match
 
-        return
-            { FilmTitle = filmTitle
-              ContentType = contentType
-              VersionNumber = versionNumber
-              Dimension = dimension
-              ProjectorAspect = projectorAspect
-              AudioLanguage = audioLanguage
-              SubtitleLanguage = subtitleLanguage
-              Captions = captions
-              AudioFormat = audioFormat
-              Resolution = resolution
-              PackageType = packageType }
-    }
+    if regMatch.Success then
+        res {
+            let! filmTitle = regMatch |> tryMatchFilmTitle
+            let! contentType = regMatch |> tryMatchContentType
+            let! versionNumber = regMatch |> tryMatchVersionNumber
+            let! dimension = regMatch |> tryMatchDimension
+            let! projectorAspect = regMatch |> tryMatchAspect
+            let! audioLanguage = regMatch |> tryMatchAudioLang
+            let! subtitleLanguage = regMatch |> tryMatchSubLang
+            let! captions = regMatch |> tryMatchCaptions
+            let! audioFormat = regMatch |> tryMatchAudioFormat
+            let! resolution = regMatch |> tryMatchResolution
+            let! packageType = regMatch |> tryMatchPackageType
+
+            return
+                { FilmTitle = filmTitle
+                  ContentType = contentType
+                  VersionNumber = versionNumber
+                  Dimension = dimension
+                  ProjectorAspect = projectorAspect
+                  AudioLanguage = audioLanguage
+                  SubtitleLanguage = subtitleLanguage
+                  Captions = captions
+                  AudioFormat = audioFormat
+                  Resolution = resolution
+                  PackageType = packageType }
+        }
+    else
+        Error(DCNParsingError.InvalidCTT content)
