@@ -36,9 +36,20 @@ let private viewReadError error =
 
 let private viewKdm dispatch kdm =
 
-    let filmTitle = kdm.ContentInfo.FilmTitle |> FilmTitle.value
+    let filmTitle =
+        TextBlock.create [ TextBlock.text (
+                               kdm.ContentInfo.FilmTitle |> FilmTitle.value
+                           )
+                           TextBlock.dock Dock.Left ]
 
-    TextBlock.create [ TextBlock.text filmTitle ] |> asView
+    let contentType =
+        TextBlock.create [ TextBlock.text (
+                               kdm.ContentInfo.ContentType |> ContentType.str
+                           )
+                           TextBlock.dock Dock.Right ]
+
+    DockPanel.create [ DockPanel.children [ contentType; filmTitle ] ]
+    |> asView
 
 
 let private viewResults results dispatch =
